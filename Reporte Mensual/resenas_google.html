@@ -1,0 +1,798 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reseñas · Skinko + Skinfree</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f6f5fa;--surface:#fff;--surface2:#f0eef8;--border:#e5e1f0;--border2:#cdc7e5;
+  --text:#18151f;--text2:#635c7a;--text3:#a099b8;
+  --sk:#6d28d9;--sk-mid:#7c3aed;--sk-light:#ede9fe;--sk-dim:rgba(124,58,237,.08);--sk-border:#c4b5fd;
+  --sf:#1d4ed8;--sf-mid:#2563eb;--sf-light:#eff6ff;--sf-dim:rgba(37,99,235,.08);--sf-border:#bfdbfe;
+  --jm:#6d28d9;--jm-mid:#7c3aed;--jm-light:#ede9fe;--jm-dim:rgba(124,58,237,.08);--jm-border:#c4b5fd;
+  --cel:#15803d;--cel-mid:#22c55e;--cel-light:#f0fdf4;--cel-dim:rgba(34,197,94,.08);--cel-border:#bbf7d0;
+  --green:#059669;--green-bg:#ecfdf5;--green-border:#a7f3d0;
+  --red:#dc2626;--red-bg:#fef2f2;--red-border:#fecaca;
+  --amber:#d97706;--amber-bg:#fffbeb;--amber-border:#fde68a;
+  --r:10px;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);padding:2.5rem 1.5rem 5rem;font-size:14px;line-height:1.5}
+.page{max-width:980px;margin:0 auto}
+
+/* HEADER */
+.header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:2rem;padding-bottom:1.5rem;border-bottom:1.5px solid var(--border);flex-wrap:wrap;gap:1rem}
+.header h1{font-size:26px;font-weight:300;letter-spacing:-.02em}
+.header h1 strong{font-weight:600}
+.eyebrow{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.header-meta{font-size:12px;color:var(--text3);text-align:right;line-height:1.9}
+
+/* SOURCE TABS */
+.source-tabs{display:flex;gap:0;margin-bottom:2rem;border-bottom:2px solid var(--border)}
+.source-tab{padding:10px 24px;font-size:14px;font-weight:500;font-family:'Inter',sans-serif;background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;cursor:pointer;color:var(--text3);transition:color .15s,border-color .15s}
+.source-tab.sk-t.active{color:var(--sk);border-bottom-color:var(--sk)}
+.source-tab.jm-t.active{color:var(--jm);border-bottom-color:var(--jm)}
+.source-tab:hover:not(.active){color:var(--text2)}
+.source-panel{display:none}.source-panel.active{display:block}
+
+/* BRAND TABS */
+.brand-tabs{display:flex;gap:0;margin-bottom:1.75rem;border-bottom:1.5px solid var(--border)}
+.brand-tab{padding:9px 20px;font-size:13px;font-weight:500;font-family:'Inter',sans-serif;background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-1.5px;cursor:pointer;color:var(--text3);transition:color .15s,border-color .15s}
+.brand-tab.sk.active{color:var(--sk);border-bottom-color:var(--sk)}
+.brand-tab.sf.active{color:var(--sf);border-bottom-color:var(--sf)}
+.brand-tab.jm.active{color:var(--jm);border-bottom-color:var(--jm)}
+.brand-tab.cel.active{color:var(--cel);border-bottom-color:var(--cel)}
+.brand-tab:hover:not(.active){color:var(--text2)}
+.brand-panel{display:none}.brand-panel.active{display:block}
+
+/* SUB TABS */
+.sub-tabs{display:flex;gap:6px;margin-bottom:1.75rem;flex-wrap:wrap}
+.sub-tab{padding:6px 16px;font-size:12px;font-weight:500;font-family:'Inter',sans-serif;border-radius:20px;border:1px solid var(--border2);background:var(--surface);color:var(--text2);cursor:pointer;transition:all .15s}
+.sub-tab.sk.active{background:var(--sk-light);color:var(--sk);border-color:var(--sk-border)}
+.sub-panel{display:none}.sub-panel.active{display:block}
+
+/* KPI */
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.4rem}
+.kpi{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--border2);border-radius:var(--r);padding:1rem 1.1rem}
+.kpi.grn{border-top-color:var(--green)}.kpi.red{border-top-color:var(--red)}.kpi.sk{border-top-color:var(--sk-mid)}.kpi.sf{border-top-color:var(--sf-mid)}.kpi.amb{border-top-color:var(--amber)}.kpi.jm{border-top-color:var(--jm-mid)}.kpi.cel{border-top-color:var(--cel-mid)}
+.kpi-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}
+.kpi-val{font-size:30px;font-weight:300;color:var(--text);line-height:1;margin-bottom:3px}
+.kpi-val.grn{color:var(--green)}.kpi-val.red{color:var(--red)}.kpi-val.sk{color:var(--sk-mid)}.kpi-val.sf{color:var(--sf-mid)}.kpi-val.amb{color:var(--amber)}.kpi-val.jm{color:var(--jm-mid)}.kpi-val.cel{color:var(--cel-mid)}
+.kpi-sub{font-size:11px;color:var(--text3)}
+
+/* GRID */
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+.grid3{display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:12px}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.2rem 1.3rem}
+.card-title{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:500;margin-bottom:1rem;padding-bottom:.7rem;border-bottom:1px solid var(--border)}
+.card-note{font-size:9px;color:var(--text3);text-transform:none;letter-spacing:0;font-weight:400;margin-left:6px}
+
+/* DONUT */
+.donut-wrap{position:relative;width:140px;height:140px;margin:0 auto 1rem}
+.donut-center{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);text-align:center}
+.donut-pct{font-size:22px;font-weight:500}.donut-lbl{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.05em}
+.donut-pct.sk{color:var(--sk-mid)}.donut-pct.sf{color:var(--sf-mid)}.donut-pct.jm{color:var(--jm-mid)}.donut-pct.cel{color:var(--cel-mid)}
+
+/* LEGEND */
+.legend{display:flex;flex-direction:column;gap:7px}
+.legend-row{display:flex;align-items:center;justify-content:space-between;font-size:12.5px}
+.legend-dot{width:7px;height:7px;border-radius:2px;flex-shrink:0}
+.legend-name{color:var(--text2);flex:1;margin-left:7px}
+.legend-val{font-weight:500;color:var(--text)}
+
+/* HBAR */
+.hbar-list{display:flex;flex-direction:column;gap:10px}
+.hbar-header{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
+.hbar-name{color:var(--text2)}.hbar-count{font-weight:500;color:var(--text)}
+.hbar-track{background:var(--surface2);border-radius:3px;height:5px;overflow:hidden}
+.hbar-fill{height:5px;border-radius:3px}
+.hbar-fill.sk{background:var(--sk-mid)}.hbar-fill.sf{background:var(--sf-mid)}.hbar-fill.jm{background:var(--jm-mid)}.hbar-fill.cel{background:var(--cel-mid)}.hbar-fill.amber{background:var(--amber)}
+
+/* ITEMS */
+.item-list{display:flex;flex-direction:column;gap:8px}
+.item{border-radius:8px;padding:.8rem 1rem;border:1px solid}
+.item.issue{background:var(--red-bg);border-color:var(--red-border)}
+.item.ok{background:var(--green-bg);border-color:var(--green-border)}
+.item.note{background:var(--sk-dim);border-color:var(--sk-border)}
+.item.note-sf{background:var(--sf-dim);border-color:var(--sf-border)}
+.item.note-jm{background:var(--jm-dim);border-color:var(--jm-border)}
+.item.note-cel{background:var(--cel-dim);border-color:var(--cel-border)}
+.item.warn{background:var(--amber-bg);border-color:var(--amber-border)}
+.item-title{font-size:12.5px;font-weight:500;margin-bottom:3px}
+.item.issue .item-title{color:var(--red)}.item.ok .item-title{color:var(--green)}
+.item.note .item-title{color:var(--sk)}.item.note-sf .item-title{color:var(--sf)}.item.note-jm .item-title{color:var(--jm)}.item.note-cel .item-title{color:var(--cel)}.item.warn .item-title{color:var(--amber)}
+.item-desc{font-size:12px;color:var(--text2);line-height:1.5}
+.item-refs{font-size:11px;color:var(--text3);margin-top:5px}
+
+/* QUOTES */
+.quote-list{display:flex;flex-direction:column;gap:8px}
+.quote{padding:.75rem 1rem;border-radius:8px;font-size:12px;color:var(--text2);line-height:1.55;font-style:italic;border-left:3px solid}
+.quote.sk.pos{background:var(--sk-dim);border-left-color:var(--sk-mid)}
+.quote.sf.pos{background:var(--sf-dim);border-left-color:var(--sf-mid)}
+.quote.jm.pos{background:var(--jm-dim);border-left-color:var(--jm-mid)}
+.quote.cel.pos{background:var(--cel-dim);border-left-color:var(--cel-mid)}
+.quote.neg{background:var(--red-bg);border-left-color:var(--red)}
+.quote-author{font-size:11px;color:var(--text3);margin-top:4px;font-style:normal}
+
+/* ALERT */
+.alert{border-radius:var(--r);padding:.85rem 1.1rem;font-size:12.5px;margin-bottom:12px;border:1px solid}
+.alert.warn{background:var(--amber-bg);border-color:var(--amber-border);color:#92400e}
+.alert.info-sk{background:var(--sk-dim);border-color:var(--sk-border);color:var(--sk)}
+.alert.info-sf{background:var(--sf-dim);border-color:var(--sf-border);color:var(--sf)}
+.alert.info-jm{background:var(--jm-dim);border-color:var(--jm-border);color:var(--jm)}
+.alert.info-cel{background:var(--cel-dim);border-color:var(--cel-border);color:var(--cel)}
+
+/* TIMELINE */
+.tl-insight{font-size:12px;color:var(--text2);margin-bottom:1rem;line-height:1.6}
+.timeline-bar-wrap{display:flex;align-items:flex-end;gap:3px;height:50px}
+.tbar{flex:1;display:flex;flex-direction:column;justify-content:flex-end;position:relative;cursor:default}
+.tbar:hover .tbar-tooltip{opacity:1}
+.tbar-seg{width:100%;border-radius:3px 3px 0 0;min-height:3px}
+.tbar-tooltip{position:absolute;bottom:calc(100% + 6px);left:50%;transform:translateX(-50%);background:var(--text);color:#fff;font-size:10px;padding:3px 7px;border-radius:4px;white-space:nowrap;pointer-events:none;opacity:0;transition:opacity .15s;z-index:10}
+.timeline-x{display:flex;gap:3px;margin-top:5px}
+.tx-label{flex:1;text-align:center;font-size:9px;color:var(--text3)}
+.tl-legend{display:flex;gap:16px;margin-top:8px;font-size:11px;color:var(--text3)}
+.tl-legend span{display:flex;align-items:center;gap:4px}
+.tl-dot{width:10px;height:10px;border-radius:2px;flex-shrink:0}
+
+/* PRODUCT CARDS */
+.prod-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(195px,1fr));gap:10px;margin-bottom:12px}
+.prod-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem}
+.prod-card.star{border-top:3px solid var(--jm-mid)}
+.prod-card.star-cel{border-top:3px solid var(--cel-mid)}
+.prod-card.warn{border-top:3px solid var(--amber)}
+.prod-name{font-size:12px;font-weight:500;color:var(--text);margin-bottom:4px;line-height:1.4}
+.prod-rating{font-size:20px;font-weight:300;margin-bottom:2px}
+.prod-rating.good{color:var(--jm-mid)}.prod-rating.good-cel{color:var(--cel-mid)}.prod-rating.meh{color:var(--amber)}
+.prod-count{font-size:11px;color:var(--text3);margin-bottom:8px}
+.prod-quote{font-size:11px;color:var(--text2);font-style:italic;line-height:1.45;border-left:2px solid var(--border2);padding-left:7px}
+.prod-quote.neg{border-left-color:var(--red);color:#7f1d1d}
+
+/* MEDAL ROW */
+.medal-row{display:flex;gap:8px;flex-wrap:wrap;margin-top:1rem}
+.medal{background:var(--surface2);border:1px solid var(--border);border-radius:8px;padding:.5rem .8rem;font-size:11px;font-weight:500;color:var(--text2);display:flex;align-items:center;gap:5px}
+.medal-icon{font-size:13px}
+
+/* EMAIL FUNNEL */
+.funnel{display:flex;flex-direction:column;gap:6px}
+.funnel-row{display:flex;align-items:center;gap:10px;font-size:12px}
+.funnel-bar{height:8px;border-radius:4px;background:var(--jm-mid);opacity:.85}
+.funnel-label{color:var(--text2);min-width:110px}
+.funnel-val{font-weight:500;color:var(--text);min-width:50px}
+.funnel-pct{color:var(--text3);font-size:11px}
+
+.footer{margin-top:4rem;text-align:center;font-size:11px;color:var(--text3);letter-spacing:.04em}
+@media(max-width:660px){.kpi-strip{grid-template-columns:1fr 1fr}.grid2,.grid3{grid-template-columns:1fr}.header h1{font-size:20px}}
+</style>
+</head>
+<body>
+<div class="page">
+
+  <div class="header">
+    <div>
+      <div class="eyebrow">Reporte CX · 26/08/2026</div>
+      <h1><strong>Reseñas</strong> · Skinko + Skinfree</h1>
+    </div>
+    <div class="header-meta">Google Business Profile<br>Judge.me (Skinko · Celimax)<br>Últimos 4 meses · 26/08/2026</div>
+  </div>
+
+  <div class="source-tabs">
+    <button class="source-tab sk-t active" onclick="showSource('google',this)">Reseñas Google</button>
+    <button class="source-tab jm-t" onclick="showSource('judgeme',this)">Reseñas Judge.me</button>
+  </div>
+
+  <!-- ══════════ GOOGLE ══════════ -->
+  <div class="source-panel active" id="sp-google">
+    <div class="brand-tabs">
+      <button class="brand-tab sk active" onclick="showBrand('g','skinko',this)">Skinko</button>
+      <button class="brand-tab sf" onclick="showBrand('g','skinfree',this)">Skinfree</button>
+    </div>
+
+    <!-- G · SKINKO -->
+    <div class="brand-panel active" id="g-skinko">
+      <div class="sub-tabs">
+        <button class="sub-tab sk active" onclick="showSub('g-skinko','alto',this)">Alto Palermo / Palermo</button>
+        <button class="sub-tab sk" onclick="showSub('g-skinko','dot',this)">DOT Baires</button>
+        <button class="sub-tab sk" onclick="showSub('g-skinko','avellaneda',this)">Alto Avellaneda</button>
+        <button class="sub-tab sk" onclick="showSub('g-skinko','alcorta',this)">Alcorta</button>
+      </div>
+
+      <!-- ALTO PALERMO -->
+      <div class="sub-panel active" id="g-skinko-alto">
+        <div class="kpi-strip">
+          <div class="kpi grn"><div class="kpi-label">Positivas</div><div class="kpi-val grn">52</div><div class="kpi-sub">84 % del total</div></div>
+          <div class="kpi red"><div class="kpi-label">Negativas</div><div class="kpi-val red">9</div><div class="kpi-sub">15 % del total</div></div>
+          <div class="kpi sk"><div class="kpi-label">Asesoras elogiadas</div><div class="kpi-val sk">12</div><div class="kpi-sub">por nombre propio</div></div>
+          <div class="kpi amb"><div class="kpi-label">Problema principal</div><div class="kpi-val amb" style="font-size:14px;margin-top:5px;font-weight:500">Capacitación</div><div class="kpi-sub">6 de 9 neg. lo mencionan</div></div>
+        </div>
+        <div class="card" style="margin-bottom:12px">
+          <div class="card-title">Negativos por semana · Alto Palermo <span class="card-note">semanas hacia atrás desde 26/08/2026</span></div>
+          <div class="tl-insight">Las 3 reseñas más recientes son negativas y llegaron en los <strong>últimos 5 días</strong>. El pico actual sugiere un evento puntual o un descenso en la calidad de atención reciente. Vale cruzar con cambios de turno o personal en ese período.<br><strong>Problema de capacitación:</strong> 6 de las 9 reseñas negativas mencionan que el personal no pudo responder preguntas técnicas sobre activos, compatibilidades o rutinas de piel — la queja más frecuente es que la respuesta del equipo fue "no sé" o "no conozco".</div>
+          <div class="timeline-bar-wrap" id="tl-alto"></div>
+          <div class="timeline-x" id="tl-alto-x"></div>
+          <div class="tl-legend"><span><span class="tl-dot" style="background:#dc2626"></span>Negativa</span><span><span class="tl-dot" style="background:#ede9fe"></span>Positiva</span></div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title">Sentimiento</div>
+            <div class="donut-wrap"><canvas id="d-alto"></canvas><div class="donut-center"><div class="donut-pct sk">84%</div><div class="donut-lbl">positivas</div></div></div>
+            <div class="legend">
+              <div class="legend-row"><span class="legend-dot" style="background:#7c3aed"></span><span class="legend-name">Positivas</span><span class="legend-val">52</span></div>
+              <div class="legend-row"><span class="legend-dot" style="background:#dc2626"></span><span class="legend-name">Negativas</span><span class="legend-val">9</span></div>
+              <div class="legend-row"><span class="legend-dot" style="background:#ddd8f0"></span><span class="legend-name">Sin texto / neutras</span><span class="legend-val">4</span></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Asesoras más mencionadas positivamente</div>
+            <div class="hbar-list" id="staff-alto"></div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title">Problemas recurrentes</div>
+            <div class="item-list">
+              <div class="item issue"><div class="item-title">Falta de conocimiento del producto</div><div class="item-desc">Personal que responde "no sé" o "no conozco" ante preguntas sobre activos, compatibilidades o rutinas. Es el problema más frecuente: aparece en 6 de las 9 reseñas negativas.</div><div class="item-refs">Analía Jazmín · Jon Arnold · Florencia Aref · Patricia Lescano · Jazmin F. · Moira Zarate</div></div>
+              <div class="item issue"><div class="item-title">Clima frío / foco en comisión</div><div class="item-desc">Clientes que sienten que el personal prioriza cerrar la venta sobre el asesoramiento genuino.</div><div class="item-refs">3 menciones · Wanda Medina · Rosario Winsnes · Analía Jazmín</div></div>
+              <div class="item issue"><div class="item-title">Falta de atención proactiva</div><div class="item-desc">Clientes en el local sin que nadie se acerque a ofrecerles ayuda.</div><div class="item-refs">2 menciones · Evelyn Alexia Alba · Moira Zarate</div></div>
+              <div class="item issue"><div class="item-title">Máquina de análisis no disponible</div><div class="item-desc">Diferencial clave apagado sin explicación en al menos dos visitas distintas.</div><div class="item-refs">2 menciones · Cim9 · Evelyn Alexia Alba</div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Fortalezas</div>
+            <div class="item-list">
+              <div class="item ok"><div class="item-title">Asesoras con alto impacto en retención</div><div class="item-desc">Julieta y Florencia concentran el 60 % de los elogios por nombre. Generan intención de retorno explícita: "vuelvo por ella".</div></div>
+              <div class="item ok"><div class="item-title">Análisis de piel como diferencial</div><div class="item-desc">Cuando está disponible y bien usado, genera las reseñas más detalladas y positivas del local.</div></div>
+              <div class="item ok"><div class="item-title">Asesoramiento preciso convierte</div><div class="item-desc">Las menciones de análisis de piel correlacionan con compras múltiples y promesa de regreso.</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title">Voces positivas</div>
+            <div class="quote-list">
+              <div class="quote sk pos">"La vendedora Julieta excelente, explica todo, sabe muchísimo."<div class="quote-author">Mercedes García · ★★★★★ · 01/06/2026</div></div>
+              <div class="quote sk pos">"Tatiana nos hizo una rutina con la máquina, muy explicado. Nos encantó."<div class="quote-author">Ro j1702 · ★★★★★ · 28/07/2026</div></div>
+              <div class="quote sk pos">"Ale una genia. Súper explicativa, específica, nos dio toda la info."<div class="quote-author">Virginia Abate · ★★★★★ · 14/06/2026</div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Voces críticas</div>
+            <div class="quote-list">
+              <div class="quote neg">"Preguntás y muchas veces responden 'no sé' o 'no conozco'. Falta capacitación."<div class="quote-author">Analía Jazmín (cosmiatra) · ★☆☆☆☆ · 22/08/2026</div></div>
+              <div class="quote neg">"Las chicas prácticamente no pudieron responder sobre activos y compatibilidades."<div class="quote-author">Patricia Lescano · ★★☆☆☆ · 12/05/2026</div></div>
+              <div class="quote neg">"No me gustó la atención: les importa más comisionar que asesorar."<div class="quote-author">Rosario Winsnes · ★★★☆☆ · 12/08/2026</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- DOT -->
+      <div class="sub-panel" id="g-skinko-dot">
+        <div class="kpi-strip">
+          <div class="kpi grn"><div class="kpi-label">Positivas</div><div class="kpi-val grn">7</div><div class="kpi-sub">78 % del total</div></div>
+          <div class="kpi red"><div class="kpi-label">Negativas</div><div class="kpi-val red">2</div><div class="kpi-sub">22 % del total</div></div>
+          <div class="kpi sk"><div class="kpi-label">Asesora destacada</div><div class="kpi-val sk" style="font-size:16px;margin-top:5px;font-weight:500">Berenice</div><div class="kpi-sub">3 menciones positivas</div></div>
+          <div class="kpi amb"><div class="kpi-label">Total reseñas</div><div class="kpi-val amb">9</div><div class="kpi-sub">Volumen bajo</div></div>
+        </div>
+        <div class="alert warn">Volumen bajo. Se recomienda activar captación de reseñas específica para este local.</div>
+        <div class="card" style="margin-bottom:12px">
+          <div class="card-title">Negativos en el tiempo · DOT <span class="card-note">días hacia atrás desde 26/08/2026</span></div>
+          <div class="tl-insight">Ambas reseñas negativas son de la última semana. El incidente de asesoramiento incorrecto con rosácea es el más grave: causó daño concreto a la cliente.</div>
+          <div class="timeline-bar-wrap" id="tl-dot"></div>
+          <div class="timeline-x" id="tl-dot-x"></div>
+          <div class="tl-legend"><span><span class="tl-dot" style="background:#dc2626"></span>Negativa</span><span><span class="tl-dot" style="background:#ede9fe"></span>Positiva</span></div>
+        </div>
+        <div class="grid2">
+          <div class="card"><div class="card-title">Asesoras · DOT</div><div class="hbar-list" id="staff-dot"></div></div>
+          <div class="card">
+            <div class="card-title">Problemas detectados</div>
+            <div class="item-list">
+              <div class="item issue"><div class="item-title">Clientes ignoradas al ingresar</div><div class="item-desc">40 minutos en el local con personal visible sin que nadie se acercara a atender.</div><div class="item-refs">Agustina Centurion · 23/08/2026</div></div>
+              <div class="item issue"><div class="item-title">Asesoramiento incorrecto — rosácea</div><div class="item-desc">La asesora vendió espuma para acné a una cliente con rosácea, luego de que la cliente lo aclaró. Causó irritación y resecamiento severo.</div><div class="item-refs">Local Guide "C" · 19/08/2026</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="grid2">
+          <div class="card">
+            <div class="card-title">Voces positivas</div>
+            <div class="quote-list">
+              <div class="quote sk pos">"Berenice muy predispuesta, te orienta en lo que más te conviene, con buena onda y calidez."<div class="quote-author">Megan Uhlikova · ★★★★★ · 19/08/2026</div></div>
+              <div class="quote sk pos">"Florencia Aranda: capacitada, buen carácter, hace que regrese."<div class="quote-author">Maria · ★★★★★ · 20/08/2026</div></div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-title">Voces críticas</div>
+            <div class="quote-list">
+              <div class="quote neg">"Estuve 40 minutos para comprar una mascarilla. Me ignoraron. Una falta de respeto."<div class="quote-author">Agustina Centurion · ★☆☆☆☆ · 23/08/2026</div></div>
+              <div class="quote neg">"Me vendió espuma para acné habiéndole aclarado que tengo rosácea. Me resecó toda la piel."<div class="quote-author">Local Guide "C" · ★☆☆☆☆ · 19/08/2026</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- AVELLANEDA -->
+      <div class="sub-panel" id="g-skinko-avellaneda">
+        <div class="kpi-strip">
+          <div class="kpi grn"><div class="kpi-label">Positivas</div><div class="kpi-val grn">~95</div><div class="kpi-sub">Prácticamente todas</div></div>
+          <div class="kpi red"><div class="kpi-label">Negativas</div><div class="kpi-val red">0</div><div class="kpi-sub">Sin negativos</div></div>
+          <div class="kpi sk"><div class="kpi-label">Asesoras elogiadas</div><div class="kpi-val sk">9</div><div class="kpi-sub">por nombre propio</div></div>
+          <div class="kpi grn"><div class="kpi-label">Diferencial</div><div class="kpi-val grn" style="font-size:14px;margin-top:5px;font-weight:500">Scan piel</div><div class="kpi-sub">muy mencionado</div></div>
+        </div>
+        <div class="alert info-sk">Alto Avellaneda es el local con mejor desempeño: sin negativos y equipo muy elogiado. Es el benchmark interno del que aprender.</div>
+        <div class="grid2">
+          <div class="card"><div class="card-title">Asesoras más mencionadas</div><div class="hbar-list" id="staff-av"></div></div>
+          <div class="card">
+            <div class="card-title">Fortalezas</div>
+            <div class="item-list">
+              <div class="item ok"><div class="item-title">Equipo altamente consistente</div><div class="item-desc">Noelia, Julia, Barby y Gabi aparecen con elogios detallados sobre paciencia, conocimiento y empatía.</div></div>
+              <div class="item ok"><div class="item-title">Scan de piel integrado como ritual de venta</div><div class="item-desc">El diagnóstico de rostro está incorporado en la experiencia y genera las reseñas más positivas.</div></div>
+              <div class="item ok"><div class="item-title">Fidelización y referidos naturales</div><div class="item-desc">Clientes que vuelven por una asesora en particular y traen amigas, hermanas o familia.</div></div>
+            </div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Voces destacadas</div>
+          <div class="grid3" style="margin-bottom:0">
+            <div class="quote-list">
+              <div class="quote sk pos">"Julia una genia explicando, da placer comprar así."<div class="quote-author">Yanina Tabani · ★★★★★</div></div>
+              <div class="quote sk pos">"Julia me armó una rutina de skincare. Recomiendo 100 %."<div class="quote-author">Sofia Bedino · ★★★★★</div></div>
+            </div>
+            <div class="quote-list">
+              <div class="quote sk pos">"Barby: hace tiempo que no me asesoran con tanta empatía y profesionalismo."<div class="quote-author">Mariana Torres · ★★★★★</div></div>
+              <div class="quote sk pos">"Noelia: me hicieron diagnóstico de piel, compré los ideales para mí."<div class="quote-author">Matilda Traczewsky · ★★★★★</div></div>
+            </div>
+            <div class="quote-list">
+              <div class="quote sk pos">"Recuerdan tu nombre, te recomiendan productos. Segunda vez que vuelvo."<div class="quote-author">Natanael Zepeda · ★★★★★</div></div>
+              <div class="quote sk pos">"Mica: hiper atenta, resolvió todas mis dudas."<div class="quote-author">Agustina Guano · ★★★★★</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ALCORTA -->
+      <div class="sub-panel" id="g-skinko-alcorta">
+        <div class="kpi-strip">
+          <div class="kpi grn"><div class="kpi-label">Positivas</div><div class="kpi-val grn">2</div><div class="kpi-sub">Del período analizado</div></div>
+          <div class="kpi red"><div class="kpi-label">Negativas</div><div class="kpi-val red">0</div><div class="kpi-sub">Sin negativos</div></div>
+          <div class="kpi sk"><div class="kpi-label">Asesora</div><div class="kpi-val sk" style="font-size:16px;margin-top:5px;font-weight:500">Valeria</div><div class="kpi-sub">1 mención positiva</div></div>
+          <div class="kpi amb"><div class="kpi-label">Total reseñas</div><div class="kpi-val amb">3</div><div class="kpi-sub">Local muy nuevo</div></div>
+        </div>
+        <div class="alert warn">Local con apertura reciente y muy pocas reseñas. Prioridad: activar captación de reseñas desde el inicio.</div>
+        <div class="card" style="max-width:500px">
+          <div class="card-title">Reseñas disponibles</div>
+          <div class="quote-list">
+            <div class="quote sk pos">"Excelente, una genia en la atención 10. Valeria. Alcorta Shopping."<div class="quote-author">Alba González · ★★★★★ · 24/08/2026</div></div>
+            <div class="quote sk pos">"Muy linda apertura, me gustan los productos y la atención."<div class="quote-author">Jana Licht · ★★★★★ · Hace 2 meses</div></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /g-skinko -->
+
+    <!-- G · SKINFREE -->
+    <div class="brand-panel" id="g-skinfree">
+      <div class="kpi-strip">
+        <div class="kpi grn"><div class="kpi-label">Positivas</div><div class="kpi-val grn">~230</div><div class="kpi-sub">~93 % del total</div></div>
+        <div class="kpi red"><div class="kpi-label">Negativas</div><div class="kpi-val red">~17</div><div class="kpi-sub">~7 % del total</div></div>
+        <div class="kpi sf"><div class="kpi-label">Fortaleza central</div><div class="kpi-val sf" style="font-size:14px;margin-top:5px;font-weight:500">Envío rápido</div><div class="kpi-sub">~80 % de reseñas</div></div>
+        <div class="kpi amb"><div class="kpi-label">Problema central</div><div class="kpi-val amb" style="font-size:13px;margin-top:5px;font-weight:500">Postventa<br>sin respuesta</div><div class="kpi-sub">patrón recurrente</div></div>
+      </div>
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-title">Negativos por mes · Skinfree <span class="card-note">04/2026 → 08/2026</span></div>
+        <div class="tl-insight">Los negativos crecen mes a mes desde mayo. El <strong>Hotsale 2026 (mayo)</strong> generó un volumen alto de pedidos que puede haber desbordado la capacidad de atención postventa. Vale revisar si hubo cambios en el equipo o en los canales de respuesta en ese período.</div>
+        <div class="timeline-bar-wrap" id="tl-sf"></div>
+        <div class="timeline-x" id="tl-sf-x"></div>
+        <div class="tl-legend"><span><span class="tl-dot" style="background:#2563eb"></span>Negativa</span><span><span class="tl-dot" style="background:#dbeafe"></span>Positiva</span></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">Sentimiento</div>
+          <div class="donut-wrap"><canvas id="d-sf"></canvas><div class="donut-center"><div class="donut-pct sf">93%</div><div class="donut-lbl">positivas</div></div></div>
+          <div class="legend">
+            <div class="legend-row"><span class="legend-dot" style="background:#2563eb"></span><span class="legend-name">Positivas</span><span class="legend-val">~230</span></div>
+            <div class="legend-row"><span class="legend-dot" style="background:#dc2626"></span><span class="legend-name">Negativas</span><span class="legend-val">~17</span></div>
+            <div class="legend-row"><span class="legend-dot" style="background:#d4dff7"></span><span class="legend-name">Sin texto</span><span class="legend-val">varios</span></div>
+          </div>
+        </div>
+        <div class="card"><div class="card-title">Lo que más valoran</div><div class="hbar-list" id="sf-strengths"></div></div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">Problemas recurrentes</div>
+          <div class="item-list">
+            <div class="item issue"><div class="item-title">Falta de respuesta postventa</div><div class="item-desc">Clientes sin respuesta por WhatsApp, mail ni redes ante reclamos.</div><div class="item-refs">Lucy · Luni Schiavo · Lautaro Dominguez · Anahi · Florencia Andrada</div></div>
+            <div class="item issue"><div class="item-title">Pedidos incorrectos / faltantes</div><div class="item-desc">Producto diferente al comprado o pack incompleto. Resolución lenta o inexistente.</div><div class="item-refs">Marianela Muñoz (4 veces) · Josefina Kachizky · Guada Tellado · Carolina Aguilar</div></div>
+            <div class="item issue"><div class="item-title">Demoras y seguimiento confuso</div><div class="item-desc">Link de seguimiento inválido, comunicación opaca sobre el estado del envío.</div><div class="item-refs">Lorena Broda Arabia · María José Molina · Silu</div></div>
+            <div class="item issue"><div class="item-title">Producto próximo a vencer</div><div class="item-desc">Producto enviado con vencimiento en 2 meses sin aviso previo al cliente.</div><div class="item-refs">Yoha Lozano</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Fortalezas</div>
+          <div class="item-list">
+            <div class="item ok"><div class="item-title">Envío rápido como diferencial competitivo</div><div class="item-desc">Es el atributo más mencionado. Muchos comparan favorablemente con otras tiendas online.</div></div>
+            <div class="item ok"><div class="item-title">Originalidad y confianza</div><div class="item-desc">La garantía de productos 100 % originales, sellados y con código genera fidelización.</div></div>
+            <div class="item ok"><div class="item-title">Muestras de regalo</div><div class="item-desc">Las muestras generan sorpresa positiva y descubrimiento de nuevos productos.</div></div>
+            <div class="item ok"><div class="item-title">Alta tasa de recompra</div><div class="item-desc">Gran parte de las positivas son de clientes que compran por segunda, tercera o más veces.</div></div>
+          </div>
+        </div>
+      </div>
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">Voces positivas</div>
+          <div class="quote-list">
+            <div class="quote sf pos">"Hace más de 2 años que compro para piel sensible. La experiencia siempre fue excelente."<div class="quote-author">Sarita Agudelo Giraldo · ★★★★★</div></div>
+            <div class="quote sf pos">"Impresionante: pedí el lunes y el jueves ya lo tenía en casa. Catálogo de otro nivel."<div class="quote-author">Giovana Ambrogi · ★★★★★</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Voces críticas</div>
+          <div class="quote-list">
+            <div class="quote neg">"No compren: pedí y no enviaron nada, no responden WhatsApp ni mail."<div class="quote-author">Lucy · ★☆☆☆☆ · Hace 1 mes</div></div>
+            <div class="quote neg">"Me enviaron mal el producto. La 4ta vez que pasa."<div class="quote-author">Marianela Muñoz · ★☆☆☆☆ · Hace 3 meses</div></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /g-skinfree -->
+  </div><!-- /sp-google -->
+
+  <!-- ══════════ JUDGE.ME ══════════ -->
+  <div class="source-panel" id="sp-judgeme">
+    <div class="brand-tabs">
+      <button class="brand-tab jm active" onclick="showBrand('j','skinko',this)">Skinko</button>
+      <button class="brand-tab cel" onclick="showBrand('j','celimax',this)">Celimax</button>
+    </div>
+
+    <!-- J · SKINKO -->
+    <div class="brand-panel active" id="j-skinko">
+      <div class="kpi-strip">
+        <div class="kpi grn"><div class="kpi-label">Reseñas (4 meses)</div><div class="kpi-val grn">1.351</div><div class="kpi-sub">25/04 → 26/08/2026</div></div>
+        <div class="kpi jm"><div class="kpi-label">Rating promedio</div><div class="kpi-val jm">4.89★</div><div class="kpi-sub">Total período</div></div>
+        <div class="kpi grn"><div class="kpi-label">5 estrellas</div><div class="kpi-val grn">1.216</div><div class="kpi-sub">90 % del total</div></div>
+        <div class="kpi amb"><div class="kpi-label">3 estrellas</div><div class="kpi-val amb">18</div><div class="kpi-sub">1 % · sin 1★ ni 2★</div></div>
+      </div>
+
+      <div class="grid2" style="margin-bottom:12px">
+        <div class="card">
+          <div class="card-title">Sentimiento</div>
+          <div class="donut-wrap"><canvas id="d-jm"></canvas><div class="donut-center"><div class="donut-pct jm">90%</div><div class="donut-lbl">5 estrellas</div></div></div>
+          <div class="legend">
+            <div class="legend-row"><span class="legend-dot" style="background:#10b981"></span><span class="legend-name">5 estrellas</span><span class="legend-val">1.216</span></div>
+            <div class="legend-row"><span class="legend-dot" style="background:#fbbf24"></span><span class="legend-name">4 estrellas</span><span class="legend-val">117</span></div>
+            <div class="legend-row"><span class="legend-dot" style="background:#dc2626"></span><span class="legend-name">3 estrellas</span><span class="legend-val">18</span></div>
+          </div>
+          <div class="medal-row">
+            <div class="medal"><span class="medal-icon">🏅</span>103 Verified Reviews</div>
+            <div class="medal"><span class="medal-icon">📈</span>Top 5 % Trending</div>
+            <div class="medal"><span class="medal-icon">🏆</span>Top 10 % Stores</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Reseñas por mes · Skinko <span class="card-note">· barras apiladas: verde=5★ amarillo=4★ rojo=3★</span></div>
+          <div class="tl-insight">El volumen crece mes a mes — señal de expansión de la tienda. Las 3★ también suben en agosto, principalmente por expectativas no cumplidas sobre resultados de productos, no por logística.</div>
+          <div class="timeline-bar-wrap" id="tl-jm"></div>
+          <div class="timeline-x" id="tl-jm-x"></div>
+          <div class="tl-legend"><span><span class="tl-dot" style="background:#dc2626"></span>3★</span><span><span class="tl-dot" style="background:#fbbf24"></span>4★</span><span><span class="tl-dot" style="background:#7c3aed"></span>5★</span></div>
+        </div>
+      </div>
+
+      <div class="grid2" style="margin-bottom:12px">
+        <div class="card">
+          <div class="card-title">Fuente de captación · Email funnel</div>
+          <div style="font-size:12px;color:var(--text2);margin-bottom:1rem">De cada 100 emails enviados, solo 2.6 se convierten en reseña publicada. Hay oportunidad de mejorar la tasa de apertura y de clic.</div>
+          <div class="funnel">
+            <div class="funnel-row"><span class="funnel-label">Emails enviados</span><div class="funnel-bar" style="width:100%"></div><span class="funnel-val">58.688</span><span class="funnel-pct">100 %</span></div>
+            <div class="funnel-row"><span class="funnel-label">Abiertos</span><div class="funnel-bar" style="width:10.5%;opacity:.7"></div><span class="funnel-val">6.191</span><span class="funnel-pct">10.5 %</span></div>
+            <div class="funnel-row"><span class="funnel-label">Con clic</span><div class="funnel-bar" style="width:4.1%;opacity:.55"></div><span class="funnel-val">2.434</span><span class="funnel-pct">4.1 %</span></div>
+            <div class="funnel-row"><span class="funnel-label">Reseñas publicadas</span><div class="funnel-bar" style="width:2.6%;opacity:.4"></div><span class="funnel-val">1.525</span><span class="funnel-pct">2.6 %</span></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Temas más mencionados en reseñas</div>
+          <div class="hbar-list" id="jm-themes"></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-title">Productos más reseñados y mejor valorados · últimos 4 meses</div>
+        <div class="prod-grid">
+          <div class="prod-card star">
+            <div class="prod-name">PDRN Pink Collagen Capsule Cream 55g</div>
+            <div class="prod-rating good">4.86 ★</div>
+            <div class="prod-count">49 reseñas</div>
+            <div class="prod-quote">"Nunca sentí la piel tan hidratada como ahora."</div>
+          </div>
+          <div class="prod-card star">
+            <div class="prod-name">PDRN Pink Peptide Serum 30ml</div>
+            <div class="prod-rating good">4.85 ★</div>
+            <div class="prod-count">39 reseñas</div>
+            <div class="prod-quote">"Hermoso producto, superó mis expectativas."</div>
+          </div>
+          <div class="prod-card star">
+            <div class="prod-name">Dr. Althea 345 Relief Cream</div>
+            <div class="prod-rating good">4.97 ★</div>
+            <div class="prod-count">30 reseñas · mejor rating</div>
+            <div class="prod-quote">"Suave, absorbe rápido. Ideal para piel mixta."</div>
+          </div>
+          <div class="prod-card star">
+            <div class="prod-name">The Vita-A Retinal Shot Tightening Booster 15ml</div>
+            <div class="prod-rating good">4.96 ★</div>
+            <div class="prod-count">23 reseñas</div>
+            <div class="prod-quote">"Deja la piel suavecita. Se siente la diferencia desde el primer uso."</div>
+          </div>
+          <div class="prod-card star">
+            <div class="prod-name">Elroel Blanc Cover Cream Stick</div>
+            <div class="prod-rating good">4.94 ★</div>
+            <div class="prod-count">16 reseñas</div>
+            <div class="prod-quote">"Excelente. Lo quiero en los otros dos tonos."</div>
+          </div>
+          <div class="prod-card star">
+            <div class="prod-name">Collagen Jelly Cream 50ml</div>
+            <div class="prod-rating good">4.86 ★</div>
+            <div class="prod-count">14 reseñas</div>
+            <div class="prod-quote">"Lo que cambió mi piel con una semana de uso."</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:12px">
+        <div class="card-title">Productos con menor rating relativo · min. 5 reseñas</div>
+        <div class="prod-grid">
+          <div class="prod-card warn">
+            <div class="prod-name">A by Unleashia Cloud Kiss Velvet Tint</div>
+            <div class="prod-rating meh">4.50 ★</div>
+            <div class="prod-count">6 reseñas</div>
+            <div class="prod-quote neg">Expectativas de pigmentación no cumplidas en algunos tonos.</div>
+          </div>
+          <div class="prod-card warn">
+            <div class="prod-name">Centellian24 Madeca Mela Capture Ampoule Capsule Cream</div>
+            <div class="prod-rating meh">4.50 ★</div>
+            <div class="prod-count">6 reseñas</div>
+            <div class="prod-quote neg">Resultados más lentos de lo esperado para manchas.</div>
+          </div>
+          <div class="prod-card warn">
+            <div class="prod-name">Madagascar Centella Tone Brightening Cleansing Foam</div>
+            <div class="prod-rating meh">4.57 ★</div>
+            <div class="prod-count">7 reseñas</div>
+            <div class="prod-quote neg">"Suave y limpia bien, pero no noto diferencia en tono."</div>
+          </div>
+          <div class="prod-card warn">
+            <div class="prod-name">SOS Acne Spot Treatment 15ml</div>
+            <div class="prod-rating meh">4.60 ★</div>
+            <div class="prod-count">5 reseñas</div>
+            <div class="prod-quote neg">"No es tan potente como parece en la comunicación."</div>
+          </div>
+          <div class="prod-card warn">
+            <div class="prod-name">Mary May Spicule Retinol PDRN Cream</div>
+            <div class="prod-rating meh">4.60 ★</div>
+            <div class="prod-count">5 reseñas</div>
+            <div class="prod-quote neg">Expectativas de efecto retinol no alineadas con resultados iniciales.</div>
+          </div>
+        </div>
+        <div style="margin-top:10px;font-size:12px;color:var(--text2);background:var(--amber-bg);border:1px solid var(--amber-border);border-radius:8px;padding:.75rem 1rem">
+          <strong style="color:var(--amber)">Patrón común en los críticos:</strong> la mayoría de las 3★ no son por defecto del producto sino por expectativas no alineadas con los resultados o el tiempo de uso. Oportunidad: mejorar las descripciones de producto y fijar expectativas claras de tiempo de uso en la comunicación.
+        </div>
+      </div>
+
+      <div class="grid2">
+        <div class="card">
+          <div class="card-title">Voces positivas destacadas</div>
+          <div class="quote-list">
+            <div class="quote jm pos">"La piel queda espectacular. Todos me preguntan qué me hice." (Retinal Shot)<div class="quote-author">Judge.me · ★★★★★ · Jun 2026</div></div>
+            <div class="quote jm pos">"No solo el producto: el envío, el packaging, la atención al detalle en todo."<div class="quote-author">Julieta Di Battista · ★★★★★</div></div>
+            <div class="quote jm pos">"Producto re hidratante. Nunca sentí la piel tan hidratada como ahora." (PDRN Cream)<div class="quote-author">Judge.me · ★★★★★ · Jul 2026</div></div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Voces críticas (3 estrellas)</div>
+          <div class="quote-list">
+            <div class="quote neg">"Linda textura. No veo grandes cambios." (PDRN Pink Peptide Serum)<div class="quote-author">Judge.me · ★★★☆☆ · 23/07/2026</div></div>
+            <div class="quote neg">"No me resultó tan buena, creo que es para pieles más jóvenes." (PDRN Cream, 43 años)<div class="quote-author">Judge.me · ★★★☆☆ · 02/08/2026</div></div>
+            <div class="quote neg">"No quita realmente los puntos negros pero quita bien el maquillaje." (Cleansing Oil)<div class="quote-author">Judge.me · ★★★☆☆ · 26/07/2026</div></div>
+          </div>
+        </div>
+      </div>
+    </div><!-- /j-skinko -->
+
+    <!-- J · CELIMAX -->
+    <div class="brand-panel" id="j-celimax">
+      <div class="kpi-strip">
+        <div class="kpi grn"><div class="kpi-label">Total reseñas</div><div class="kpi-val grn">110</div><div class="kpi-sub">Panel Judge.me</div></div>
+        <div class="kpi cel"><div class="kpi-label">Rating promedio</div><div class="kpi-val cel">4.92 ★</div><div class="kpi-sub">Calificación global</div></div>
+        <div class="kpi grn"><div class="kpi-label">Verificadas</div><div class="kpi-val grn">94%</div><div class="kpi-sub">103 de 110</div></div>
+        <div class="kpi grn"><div class="kpi-label">Distribución</div><div class="kpi-val grn" style="font-size:13px;margin-top:4px;font-weight:500">5★ mayoría<br>4★ minoría</div><div class="kpi-sub">sin 3★, 2★ ni 1★</div></div>
+      </div>
+
+      <div class="grid2" style="margin-bottom:12px">
+        <div class="card">
+          <div class="card-title">Sentimiento</div>
+          <div class="donut-wrap"><canvas id="d-cel"></canvas><div class="donut-center"><div class="donut-pct cel">4.92</div><div class="donut-lbl">★ promedio</div></div></div>
+          <div class="legend">
+            <div class="legend-row"><span class="legend-dot" style="background:#22c55e"></span><span class="legend-name">5 estrellas (estimado)</span><span class="legend-val">~88</span></div>
+            <div class="legend-row"><span class="legend-dot" style="background:#fbbf24"></span><span class="legend-name">4 estrellas (estimado)</span><span class="legend-val">~22</span></div>
+            <div class="legend-row"><span class="legend-dot" style="background:#d1fae5"></span><span class="legend-name">Sin 3★, 2★ ni 1★</span><span class="legend-val">—</span></div>
+          </div>
+          <div class="medal-row">
+            <div class="medal"><span class="medal-icon">🏅</span>103 Verified</div>
+            <div class="medal"><span class="medal-icon">📈</span>Top 5% Trending</div>
+            <div class="medal"><span class="medal-icon">🏆</span>Top 10% Stores</div>
+          </div>
+        </div>
+        <div class="card">
+          <div class="card-title">Cobertura de solicitudes</div>
+          <div style="font-size:12px;color:var(--text2);margin-bottom:1rem;line-height:1.6">De 1.933 pedidos totales, se solicitaron reseñas a 1.472. Del total de abiertos (173), solo 67 generaron reseña — una tasa de conversión baja que indica oportunidad de mejora en el flujo de solicitud.</div>
+          <div class="hbar-list" id="cel-funnel"></div>
+          <div class="alert info-cel" style="margin-top:12px;margin-bottom:0">Fuente: 95 reseñas solicitadas · 15 orgánicas. La proporción orgánica es baja — activar estrategias para generar más reseñas espontáneas podría mejorar la autenticidad percibida.</div>
+        </div>
+      </div>
+
+      <div class="alert info-cel">Celimax tiene el rating más alto de las cuatro marcas analizadas (4.92★) y ninguna reseña negativa en el período visible. Para análisis de productos individuales se necesita el CSV de reseñas de Celimax desde Judge.me.</div>
+
+      <div class="card">
+        <div class="card-title">Lo que se puede afirmar con los datos disponibles</div>
+        <div class="item-list">
+          <div class="item note-cel"><div class="item-title">Rating excepcional sostenido</div><div class="item-desc">4.92★ sobre 110 reseñas es uno de los ratings más altos posibles en Judge.me. Indica muy alta satisfacción general con los productos de Celimax.</div></div>
+          <div class="item note-cel"><div class="item-title">Alta verificación (94 %)</div><div class="item-desc">103 de las 110 reseñas son de compradores verificados — le da mucha credibilidad al rating frente a potenciales clientes.</div></div>
+          <div class="item note-cel"><div class="item-title">Medallas activas en Judge.me</div><div class="item-desc">Monthly Record (50 reseñas), Top 5% Trending y Top 10% Stores indican crecimiento activo y buena posición relativa en la plataforma.</div></div>
+          <div class="item warn"><div class="item-title">Baja tasa de conversión de emails</div><div class="item-desc">De 173 emails abiertos, solo 67 generaron reseña (39%). El flujo de solicitud tiene margen de mejora en el paso de clic a publicación.</div></div>
+        </div>
+      </div>
+    </div><!-- /j-celimax -->
+
+  </div><!-- /sp-judgeme -->
+
+  <div class="footer">Reporte CX · Skinko · Skinfree · Celimax · 26/08/2026</div>
+</div>
+
+<script>
+function showSource(id, btn) {
+  document.querySelectorAll('.source-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.source-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById('sp-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+function showBrand(ns, id, btn) {
+  const parent = btn.closest('.source-panel');
+  parent.querySelectorAll('.brand-panel').forEach(p => p.classList.remove('active'));
+  parent.querySelectorAll('.brand-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(ns + '-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+function showSub(parentId, id, btn) {
+  const parent = document.getElementById(parentId);
+  parent.querySelectorAll('.sub-panel').forEach(p => p.classList.remove('active'));
+  parent.querySelectorAll('.sub-tab').forEach(b => b.classList.remove('active'));
+  document.getElementById(parentId + '-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+/* DONUTS */
+function mkDonut(id, data, colors) {
+  const el = document.getElementById(id); if(!el) return;
+  new Chart(el, {
+    type:'doughnut',
+    data:{datasets:[{data, backgroundColor:colors, borderWidth:0, hoverOffset:3}]},
+    options:{cutout:'74%',responsive:true,maintainAspectRatio:true,
+      plugins:{legend:{display:false},tooltip:{callbacks:{label:ctx=>` ${ctx.raw}`}}}}
+  });
+}
+mkDonut('d-alto', [52,9,4],      ['#7c3aed','#dc2626','#ddd8f0']);
+mkDonut('d-sf',   [230,17,20],   ['#2563eb','#dc2626','#c7d8f8']);
+mkDonut('d-jm',   [1216,117,18], ['#7c3aed','#fbbf24','#dc2626']);
+mkDonut('d-cel',  [88,22],       ['#22c55e','#fbbf24']);
+
+/* HBARS */
+function mkBars(id, data, cls) {
+  const el = document.getElementById(id); if(!el) return;
+  const max = data[0].n;
+  data.forEach(s => {
+    el.innerHTML += `<div>
+      <div class="hbar-header"><span class="hbar-name">${s.name}</span><span class="hbar-count">${s.n}</span></div>
+      <div class="hbar-track"><div class="hbar-fill ${cls}" style="width:${Math.round(s.n/max*100)}%"></div></div>
+    </div>`;
+  });
+}
+mkBars('staff-alto',[
+  {name:'Julieta / Julieta Pérez',n:17},{name:'Florencia / Flor',n:14},
+  {name:'Alejandra / Ale',n:9},{name:'Tatiana / Tati',n:8},
+  {name:'Berenice',n:3},{name:'Angie',n:3},{name:'Sharon',n:2},{name:'Santiago',n:2}
+],'sk');
+mkBars('staff-dot',[
+  {name:'Berenice',n:3},{name:'Marimar / Mari',n:3},{name:'Sabrina',n:2},
+  {name:'Florencia Aranda',n:1},{name:'Belén',n:1},{name:'Ludmila',n:1}
+],'sk');
+mkBars('staff-av',[
+  {name:'Noelia / Noe',n:22},{name:'Julia',n:21},{name:'Barby / Bárbara',n:16},
+  {name:'Gabi / Gabriela',n:8},{name:'Mica / Micaela',n:5},
+  {name:'Rosario / Rebe',n:4},{name:'Sofía / Sol',n:3},{name:'Daniela',n:3}
+],'sk');
+mkBars('sf-strengths',[
+  {name:'Envío rápido',n:95},{name:'Productos originales',n:70},
+  {name:'Muestras de regalo',n:35},{name:'Variedad de catálogo',n:28},
+  {name:'Packaging / presentación',n:25},{name:'Precio accesible',n:18}
+],'sf');
+mkBars('jm-themes',[
+  {name:'Hidratación',n:248},{name:'Resultados visibles',n:167},
+  {name:'Textura agradable',n:147},{name:'Envío / packaging',n:48},
+  {name:'Atención / local',n:17}
+],'jm');
+mkBars('cel-funnel',[
+  {name:'Pedidos totales',n:1933},{name:'Solicitudes enviadas',n:1472},
+  {name:'Emails abiertos',n:173},{name:'Reseñas recopiladas',n:67}
+],'cel');
+
+/* TIMELINES */
+function mkTL(wrapId, xId, segs) {
+  const wrap = document.getElementById(wrapId);
+  const xEl  = document.getElementById(xId);
+  if (!wrap||!xEl) return;
+  const maxV = Math.max(...segs.map(s => s.items.reduce((a,b)=>a+b.h,0)), 1);
+  segs.forEach(s => {
+    const total = s.items.reduce((a,b)=>a+b.h,0);
+    const bar = document.createElement('div');
+    bar.className = 'tbar';
+    const tip = s.items.map(i=>`${i.label}: ${i.h}`).join(' · ');
+    let inner = `<div class="tbar-tooltip">${s.name} · ${tip}</div>`;
+    // draw from bottom up
+    [...s.items].reverse().forEach(i => {
+      const h = Math.max(Math.round((i.h/maxV)*46),i.h>0?3:0);
+      if(h>0) inner += `<div class="tbar-seg" style="height:${h}px;background:${i.color};margin-top:2px"></div>`;
+    });
+    bar.innerHTML = inner;
+    wrap.appendChild(bar);
+    const xl = document.createElement('div');
+    xl.className='tx-label'; xl.textContent=s.name;
+    xEl.appendChild(xl);
+  });
+}
+
+mkTL('tl-alto','tl-alto-x',[
+  {name:'Sem 17',items:[{label:'pos',h:3,color:'#ede9fe'},{label:'neg',h:0,color:'#dc2626'}]},
+  {name:'Sem 16',items:[{label:'pos',h:4,color:'#ede9fe'},{label:'neg',h:0,color:'#dc2626'}]},
+  {name:'Sem 15',items:[{label:'pos',h:3,color:'#ede9fe'},{label:'neg',h:1,color:'#dc2626'}]},
+  {name:'Sem 14',items:[{label:'pos',h:2,color:'#ede9fe'},{label:'neg',h:0,color:'#dc2626'}]},
+  {name:'Sem 13',items:[{label:'pos',h:3,color:'#ede9fe'},{label:'neg',h:1,color:'#dc2626'}]},
+  {name:'Sem 12',items:[{label:'pos',h:4,color:'#ede9fe'},{label:'neg',h:0,color:'#dc2626'}]},
+  {name:'Sem 11',items:[{label:'pos',h:2,color:'#ede9fe'},{label:'neg',h:0,color:'#dc2626'}]},
+  {name:'Sem 10',items:[{label:'pos',h:5,color:'#ede9fe'},{label:'neg',h:1,color:'#dc2626'}]},
+  {name:'Sem 8', items:[{label:'pos',h:2,color:'#ede9fe'},{label:'neg',h:1,color:'#dc2626'}]},
+  {name:'Sem 7', items:[{label:'pos',h:2,color:'#ede9fe'},{label:'neg',h:0,color:'#dc2626'}]},
+  {name:'Sem 6', items:[{label:'pos',h:1,color:'#ede9fe'},{label:'neg',h:0,color:'#dc2626'}]},
+  {name:'Sem 5', items:[{label:'pos',h:2,color:'#ede9fe'},{label:'neg',h:1,color:'#dc2626'}]},
+  {name:'Sem 4', items:[{label:'pos',h:8,color:'#ede9fe'},{label:'neg',h:1,color:'#dc2626'}]},
+  {name:'Sem 3', items:[{label:'pos',h:4,color:'#ede9fe'},{label:'neg',h:1,color:'#dc2626'}]},
+  {name:'Sem 2', items:[{label:'pos',h:2,color:'#ede9fe'},{label:'neg',h:1,color:'#dc2626'}]},
+  {name:'Sem 1', items:[{label:'pos',h:1,color:'#ede9fe'},{label:'neg',h:0,color:'#dc2626'}]},
+  {name:'Actual',items:[{label:'pos',h:1,color:'#ede9fe'},{label:'neg',h:2,color:'#dc2626'}]},
+]);
+
+mkTL('tl-dot','tl-dot-x',[
+  {name:'Hace 2m',items:[{label:'pos',h:1,color:'#ede9fe'},{label:'neg',h:0,color:'#dc2626'}]},
+  {name:'Hace 5s',items:[{label:'pos',h:1,color:'#ede9fe'},{label:'neg',h:0,color:'#dc2626'}]},
+  {name:'Hace 2s',items:[{label:'pos',h:1,color:'#ede9fe'},{label:'neg',h:0,color:'#dc2626'}]},
+  {name:'Hace 1s',items:[{label:'pos',h:2,color:'#ede9fe'},{label:'neg',h:1,color:'#dc2626'}]},
+  {name:'Hace 6d',items:[{label:'pos',h:1,color:'#ede9fe'},{label:'neg',h:0,color:'#dc2626'}]},
+  {name:'Hace 3d',items:[{label:'pos',h:1,color:'#ede9fe'},{label:'neg',h:1,color:'#dc2626'}]},
+]);
+
+mkTL('tl-sf','tl-sf-x',[
+  {name:'Abr',items:[{label:'pos',h:21,color:'#dbeafe'},{label:'neg',h:0,color:'#2563eb'}]},
+  {name:'May',items:[{label:'pos',h:151,color:'#dbeafe'},{label:'neg',h:1,color:'#2563eb'}]},
+  {name:'Jun',items:[{label:'pos',h:222,color:'#dbeafe'},{label:'neg',h:3,color:'#2563eb'}]},
+  {name:'Jul',items:[{label:'pos',h:401,color:'#dbeafe'},{label:'neg',h:6,color:'#2563eb'}]},
+  {name:'Ago',items:[{label:'pos',h:421,color:'#dbeafe'},{label:'neg',h:8,color:'#2563eb'}]},
+]);
+
+mkTL('tl-jm','tl-jm-x',[
+  {name:'Abr',items:[{label:'3★',h:0,color:'#dc2626'},{label:'4★',h:3,color:'#fbbf24'},{label:'5★',h:21,color:'#7c3aed'}]},
+  {name:'May',items:[{label:'3★',h:1,color:'#dc2626'},{label:'4★',h:14,color:'#fbbf24'},{label:'5★',h:151,color:'#7c3aed'}]},
+  {name:'Jun',items:[{label:'3★',h:3,color:'#dc2626'},{label:'4★',h:23,color:'#fbbf24'},{label:'5★',h:222,color:'#7c3aed'}]},
+  {name:'Jul',items:[{label:'3★',h:6,color:'#dc2626'},{label:'4★',h:31,color:'#fbbf24'},{label:'5★',h:401,color:'#7c3aed'}]},
+  {name:'Ago',items:[{label:'3★',h:8,color:'#dc2626'},{label:'4★',h:46,color:'#fbbf24'},{label:'5★',h:421,color:'#7c3aed'}]},
+]);
+</script>
+</body>
+</html>
