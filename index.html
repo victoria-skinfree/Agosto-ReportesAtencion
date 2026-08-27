@@ -6,10 +6,11 @@
   <title>Panel de Reportes de Atención</title>
   <style>
     body { font-family: 'Inter', system-ui, sans-serif; padding: 3rem 2rem; background: #f8f9fa; color: #1a1a1a; }
-    h1 { font-size: 24px; font-weight: 600; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
+    h1 { font-size: 24px; font-weight: 600; margin-bottom: 1.5rem; }
     .btn-container { display: flex; flex-direction: column; gap: 12px; max-width: 320px; }
-    .btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; background: #7c3aed; color: white; text-decoration: none; border-radius: 8px; font-weight: 500; font-size: 14px; transition: background 0.2s; }
-    .btn:hover { background: #6d28d9; }
+    .btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; background: #7c3aed; color: white; text-decoration: none; border-radius: 8px; font-weight: 500; font-size: 14px; }
+    .btn-download { background: #10b981; margin-top: 10px; cursor: pointer; border: none; }
+    .btn-download:hover { background: #059669; }
   </style>
 </head>
 <body>
@@ -17,14 +18,12 @@
   <h1>📊 Panel de Reportes de Atención</h1>
 
   <div class="btn-container">
-    <!-- Apunta al reporte mensual subido dentro de la carpeta Reporte Mensual -->
-    <a href="Reporte Mensual/reporte_cx_agosto2026.html" class="btn">📅 Reporte Mensual Agosto</a>
-    
-    <!-- Apunta a la carpeta de reportes semanales -->
+    <a href="Reporte Mensual/" class="btn">📅 Reporte Mensual Agosto</a>
     <a href="ReportesSemanales/" class="btn">📅 Reporte Semanal 1</a>
-    
-    <!-- Reporte de reseñas -->
     <a href="resenas_google.html" class="btn">⭐ Reporte de Reseñas</a>
+    
+    <!-- BOTÓN PARA DESCARGAR O IMPRIMIR EN PDF -->
+    <button onclick="window.print()" class="btn btn-download">📥 Descargar esta pantalla en PDF</button>
   </div>
 
 </body>
