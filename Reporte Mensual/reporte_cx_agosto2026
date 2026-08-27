@@ -1,0 +1,930 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Reporte Mensual Agosto 2026 · Laboratorio BEK</title>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.js"></script>
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap');
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#f6f5fa;--surface:#fff;--surface2:#f0eef8;--border:#e5e1f0;--border2:#cdc7e5;
+  --text:#18151f;--text2:#635c7a;--text3:#a099b8;
+  --sk:#6d28d9;--sk-mid:#7c3aed;--sk-light:#ede9fe;--sk-dim:rgba(124,58,237,.08);--sk-border:#c4b5fd;
+  --sf:#1d4ed8;--sf-mid:#2563eb;--sf-light:#eff6ff;--sf-dim:rgba(37,99,235,.08);--sf-border:#bfdbfe;
+  --cel:#15803d;--cel-mid:#16a34a;--cel-light:#f0fdf4;--cel-dim:rgba(34,197,94,.08);--cel-border:#bbf7d0;
+  --green:#059669;--green-bg:#ecfdf5;--green-border:#a7f3d0;
+  --red:#dc2626;--red-bg:#fef2f2;--red-border:#fecaca;
+  --amber:#d97706;--amber-bg:#fffbeb;--amber-border:#fde68a;
+  --r:10px;
+}
+body{font-family:'Inter',sans-serif;background:var(--bg);color:var(--text);padding:2.5rem 1.5rem 5rem;font-size:14px;line-height:1.5}
+.page{max-width:980px;margin:0 auto}
+
+/* HEADER */
+.header{display:flex;align-items:flex-end;justify-content:space-between;margin-bottom:1.5rem;padding-bottom:1.5rem;border-bottom:1.5px solid var(--border);flex-wrap:wrap;gap:1rem}
+.header h1{font-size:26px;font-weight:300;letter-spacing:-.02em}
+.header h1 strong{font-weight:600}
+.eyebrow{font-size:11px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);margin-bottom:6px}
+.header-meta{font-size:12px;color:var(--text3);text-align:right;line-height:1.9}
+
+/* GLOSARIO */
+details.glosario{margin-bottom:1.5rem}
+details.glosario summary{cursor:pointer;font-size:12px;font-weight:500;color:var(--text3);letter-spacing:.05em;text-transform:uppercase;padding:.5rem 0;list-style:none;display:flex;align-items:center;gap:6px}
+details.glosario summary::-webkit-details-marker{display:none}
+details.glosario summary::before{content:'▸ '}
+details[open].glosario summary::before{content:'▾ '}
+.glosario-body{display:grid;grid-template-columns:1fr 1fr;gap:8px;padding:.75rem 0}
+.glos-item{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.7rem 1rem;font-size:12px}
+.glos-term{font-weight:600;color:var(--text);margin-bottom:3px}
+.glos-def{color:var(--text2);line-height:1.5}
+
+/* RESUMEN GENERAL */
+.sec-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;color:var(--text3);margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.summary-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-bottom:1.5rem}
+.brand-summary{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);overflow:hidden}
+.brand-summary-header{padding:.85rem 1.1rem;font-size:11px;font-weight:600;letter-spacing:.06em;text-transform:uppercase;color:#fff}
+.brand-summary-header.sk{background:var(--sk-mid)}.brand-summary-header.sf{background:var(--sf-mid)}.brand-summary-header.cel{background:var(--cel-mid)}
+.brand-summary-body{padding:1rem 1.1rem}
+.bs-main{font-size:36px;font-weight:300;line-height:1;margin-bottom:2px}
+.bs-main.sk{color:var(--sk-mid)}.bs-main.sf{color:var(--sf-mid)}.bs-main.cel{color:var(--cel-mid)}
+.bs-main-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:12px}
+.bs-row{display:flex;justify-content:space-between;align-items:baseline;padding:.3rem 0;border-bottom:1px solid var(--border)}
+.bs-row:last-child{border-bottom:none}
+.bs-label{font-size:11px;color:var(--text3)}
+.bs-val{font-size:14px;font-weight:500;color:var(--text)}
+.bs-val.sk{color:var(--sk-mid)}.bs-val.sf{color:var(--sf-mid)}.bs-val.cel{color:var(--cel-mid)}.bs-val.grn{color:var(--green)}.bs-val.amber{color:var(--amber)}.bs-val.red{color:var(--red)}
+
+/* ALERTAS */
+.alertas-bloque{margin-bottom:2rem}
+.alerta-item{margin-bottom:6px}
+.alerta-item summary{cursor:pointer;list-style:none;display:flex;align-items:center;gap:8px;background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.7rem 1rem;font-size:12.5px;font-weight:500}
+.alerta-item summary::-webkit-details-marker{display:none}
+.alerta-item summary .arr{margin-left:auto;font-size:10px;color:var(--text3)}
+details[open].alerta-item summary .arr{transform:rotate(180deg)}
+.alerta-item summary .dot{width:8px;height:8px;border-radius:50%;flex-shrink:0}
+.alerta-item.red summary{border-color:var(--red-border);background:var(--red-bg);color:#7f1d1d}
+.alerta-item.red summary .dot{background:var(--red)}
+.alerta-item.amber summary{border-color:var(--amber-border);background:var(--amber-bg);color:#92400e}
+.alerta-item.amber summary .dot{background:var(--amber)}
+.alerta-item.green summary{border-color:var(--green-border);background:var(--green-bg);color:#065f46}
+.alerta-item.green summary .dot{background:var(--green)}
+.alerta-item.sk summary{border-color:var(--sk-border);background:var(--sk-dim);color:var(--sk)}
+.alerta-item.sk summary .dot{background:var(--sk-mid)}
+.alerta-body{padding:.75rem 1rem;font-size:12px;color:var(--text2);line-height:1.6;border:1px solid var(--border);border-top:none;border-radius:0 0 8px 8px;background:var(--surface)}
+.alerta-item.red .alerta-body{border-color:var(--red-border);background:var(--red-bg);color:#7f1d1d}
+.alerta-item.amber .alerta-body{border-color:var(--amber-border);background:var(--amber-bg);color:#92400e}
+.alerta-item.green .alerta-body{border-color:var(--green-border);background:var(--green-bg);color:#065f46}
+.alerta-item.sk .alerta-body{border-color:var(--sk-border);background:var(--sk-dim);color:var(--sk)}
+
+/* TABS PRINCIPALES */
+.tabs-bar{display:flex;gap:0;border-bottom:2px solid var(--border);margin-bottom:2rem}
+.tab-btn{padding:11px 20px;font-size:13px;font-weight:500;font-family:'Inter',sans-serif;background:none;border:none;border-bottom:3px solid transparent;margin-bottom:-2px;cursor:pointer;color:var(--text3);transition:color .15s,border-color .15s;white-space:nowrap}
+.tab-btn.active{color:var(--text);border-bottom-color:var(--sk-mid)}
+.tab-btn:hover:not(.active){color:var(--text2)}
+.tab-panel{display:none}.tab-panel.active{display:block}
+
+/* BRAND TABS dentro de panel */
+.brand-tabs{display:flex;gap:6px;margin-bottom:1.5rem;flex-wrap:wrap}
+.brand-btn{padding:7px 18px;font-size:12px;font-weight:500;font-family:'Inter',sans-serif;border-radius:20px;border:1px solid var(--border2);background:var(--surface);color:var(--text2);cursor:pointer;transition:all .15s}
+.brand-btn.sk.active{background:var(--sk-light);color:var(--sk);border-color:var(--sk-border)}
+.brand-btn.sf.active{background:var(--sf-light);color:var(--sf);border-color:var(--sf-border)}
+.brand-btn.cel.active{background:var(--cel-light);color:var(--cel);border-color:var(--cel-border)}
+.brand-panel{display:none}.brand-panel.active{display:block}
+
+/* KPI */
+.kpi-strip{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;margin-bottom:1.2rem}
+.kpi-strip.cols2{grid-template-columns:repeat(2,1fr)}
+.kpi-strip.cols3{grid-template-columns:repeat(3,1fr)}
+.kpi-strip.cols5{grid-template-columns:repeat(5,1fr)}
+.kpi{background:var(--surface);border:1px solid var(--border);border-top:3px solid var(--border2);border-radius:var(--r);padding:1rem 1.1rem}
+.kpi.sk{border-top-color:var(--sk-mid)}.kpi.sf{border-top-color:var(--sf-mid)}.kpi.cel{border-top-color:var(--cel-mid)}
+.kpi.grn{border-top-color:var(--green)}.kpi.red{border-top-color:var(--red)}.kpi.amb{border-top-color:var(--amber)}
+.kpi-label{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.07em;margin-bottom:7px}
+.kpi-val{font-size:30px;font-weight:300;color:var(--text);line-height:1;margin-bottom:3px}
+.kpi-val.sk{color:var(--sk-mid)}.kpi-val.sf{color:var(--sf-mid)}.kpi-val.cel{color:var(--cel-mid)}
+.kpi-val.grn{color:var(--green)}.kpi-val.red{color:var(--red)}.kpi-val.amb{color:var(--amber)}
+.kpi-sub{font-size:11px;color:var(--text3)}
+
+/* CARD */
+.card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1.2rem 1.3rem;margin-bottom:12px}
+.card-title{font-size:10px;color:var(--text3);text-transform:uppercase;letter-spacing:.08em;font-weight:500;margin-bottom:1rem;padding-bottom:.7rem;border-bottom:1px solid var(--border)}
+.note{font-size:11px;color:var(--text3);margin-top:.6rem;line-height:1.5}
+.grid2{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-bottom:12px}
+
+/* INLINE ALERT */
+.inline-alert{border-radius:8px;padding:.7rem 1rem;font-size:12px;border:1px solid;margin-bottom:.75rem;line-height:1.5}
+.inline-alert.warn{background:var(--amber-bg);border-color:var(--amber-border);color:#92400e}
+.inline-alert.info{background:var(--sf-dim);border-color:var(--sf-border);color:var(--sf)}
+.inline-alert.ok{background:var(--green-bg);border-color:var(--green-border);color:#065f46}
+.inline-alert.sk{background:var(--sk-dim);border-color:var(--sk-border);color:var(--sk)}
+
+/* HBAR */
+.hbar-list{display:flex;flex-direction:column;gap:10px}
+.hbar-header{display:flex;justify-content:space-between;font-size:12px;margin-bottom:4px}
+.hbar-name{color:var(--text2)}.hbar-count{font-weight:500;color:var(--text)}
+.hbar-track{background:var(--surface2);border-radius:3px;height:6px;overflow:hidden}
+.hbar-fill{height:6px;border-radius:3px}
+.hbar-fill.sk{background:var(--sk-mid)}.hbar-fill.sf{background:var(--sf-mid)}.hbar-fill.cel{background:var(--cel-mid)}
+.hbar-fill.amber{background:var(--amber)}.hbar-fill.grn{background:var(--green)}
+.hbar-fill.c1{background:#7c3aed}.hbar-fill.c2{background:#2563eb}.hbar-fill.c3{background:#16a34a}
+.hbar-fill.c4{background:#d97706}.hbar-fill.c5{background:#dc2626}.hbar-fill.c6{background:#0891b2}
+.hbar-fill.c7{background:#7c3aed90}.hbar-fill.c8{background:#059669}
+
+/* DATA TABLE */
+.data-table{width:100%;border-collapse:collapse;font-size:12px}
+.data-table th{text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.07em;color:var(--text3);font-weight:500;padding:.5rem .7rem;border-bottom:1px solid var(--border)}
+.data-table td{padding:.5rem .7rem;border-bottom:1px solid var(--border);color:var(--text2)}
+.data-table tr:last-child td{border-bottom:none}
+.data-table tr.today td{background:var(--surface2);font-weight:500;color:var(--text)}
+.badge{display:inline-block;padding:2px 8px;border-radius:10px;font-size:10px;font-weight:500}
+.badge.green{background:var(--green-bg);color:var(--green);border:1px solid var(--green-border)}
+.badge.amber{background:var(--amber-bg);color:var(--amber);border:1px solid var(--amber-border)}
+.badge.red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+.badge.sk{background:var(--sk-light);color:var(--sk);border:1px solid var(--sk-border)}
+.badge.sf{background:var(--sf-light);color:var(--sf);border:1px solid var(--sf-border)}
+
+.val-green{color:var(--green);font-weight:500}
+.val-red{color:var(--red);font-weight:500}
+.val-amber{color:var(--amber);font-weight:500}
+.val-sk{color:var(--sk-mid);font-weight:500}
+.val-sf{color:var(--sf-mid);font-weight:500}
+.val-cel{color:var(--cel-mid);font-weight:500}
+
+/* ITEM */
+.item-list{display:flex;flex-direction:column;gap:8px}
+.item{border-radius:8px;padding:.8rem 1rem;border:1px solid}
+.item.issue{background:var(--red-bg);border-color:var(--red-border)}
+.item.ok{background:var(--green-bg);border-color:var(--green-border)}
+.item.warn{background:var(--amber-bg);border-color:var(--amber-border)}
+.item.sk{background:var(--sk-dim);border-color:var(--sk-border)}
+.item.sf{background:var(--sf-dim);border-color:var(--sf-border)}
+.item.cel{background:var(--cel-dim);border-color:var(--cel-border)}
+.item-title{font-size:12.5px;font-weight:500;margin-bottom:3px}
+.item.issue .item-title{color:var(--red)}.item.ok .item-title{color:var(--green)}
+.item.warn .item-title{color:var(--amber)}.item.sk .item-title{color:var(--sk-mid)}
+.item.sf .item-title{color:var(--sf-mid)}.item.cel .item-title{color:var(--cel-mid)}
+.item-desc{font-size:12px;color:var(--text2);line-height:1.5}
+
+/* CONTINGENCIA CHIPS */
+.conting-list{display:flex;flex-direction:column;gap:8px}
+.conting-item{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:.75rem 1rem;display:flex;align-items:flex-start;gap:10px;font-size:12.5px}
+.conting-item.bloqueo{border-color:var(--red-border);background:var(--red-bg)}
+.conting-item.plat{border-color:var(--amber-border);background:var(--amber-bg)}
+.conting-item.daily{border-color:var(--border2);background:var(--surface2)}
+.conting-item.logistica{border-color:var(--sf-border);background:var(--sf-dim)}
+.chip{font-size:10px;font-weight:600;padding:2px 8px;border-radius:10px;white-space:nowrap;margin-top:1px}
+.chip.sk{background:var(--sk-light);color:var(--sk);border:1px solid var(--sk-border)}
+.chip.sf{background:var(--sf-light);color:var(--sf);border:1px solid var(--sf-border)}
+.chip.cel{background:var(--cel-light);color:var(--cel);border:1px solid var(--cel-border)}
+.chip.red{background:var(--red-bg);color:var(--red);border:1px solid var(--red-border)}
+.conting-date{font-weight:600;color:var(--text);min-width:40px}
+.conting-desc{color:var(--text2);flex:1;line-height:1.5}
+.chips-row{display:flex;gap:4px;flex-wrap:wrap;margin-bottom:4px}
+
+/* RESEÑAS EMBED */
+.resenas-frame{width:100%;border:none;border-radius:var(--r);overflow:hidden}
+
+/* COMPARATIVA RESEÑAS */
+.resena-comp{display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-bottom:12px}
+.rc-card{background:var(--surface);border:1px solid var(--border);border-radius:var(--r);padding:1rem 1.1rem;text-align:center}
+.rc-brand{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.08em;margin-bottom:.5rem}
+.rc-brand.sk{color:var(--sk-mid)}.rc-brand.sf{color:var(--sf-mid)}.rc-brand.cel{color:var(--cel-mid)}
+.rc-rating{font-size:28px;font-weight:300;line-height:1}
+.rc-rating.sk{color:var(--sk-mid)}.rc-rating.sf{color:var(--sf-mid)}.rc-rating.cel{color:var(--cel-mid)}
+.rc-sub{font-size:11px;color:var(--text3);margin-top:4px}
+.rc-row{display:flex;justify-content:space-between;font-size:11px;margin-top:8px;padding-top:6px;border-top:1px solid var(--border)}
+.rc-row-label{color:var(--text3)}.rc-row-val{font-weight:500;color:var(--text)}
+
+/* MV CARDS */
+.mv-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px;margin-top:.75rem}
+.mv-card{border-radius:8px;padding:.85rem 1rem;border:1px solid}
+.mv-card.sk{background:var(--sk-dim);border-color:var(--sk-border)}
+.mv-card.sf{background:var(--sf-dim);border-color:var(--sf-border)}
+.mv-card.red{background:var(--red-bg);border-color:var(--red-border)}
+.mv-card.warn{background:var(--amber-bg);border-color:var(--amber-border)}
+.mv-label{font-size:10px;font-weight:600;text-transform:uppercase;letter-spacing:.07em;margin-bottom:4px}
+.mv-card.sk .mv-label{color:var(--sk)}.mv-card.sf .mv-label{color:var(--sf)}
+.mv-card.red .mv-label{color:var(--red)}.mv-card.warn .mv-label{color:var(--amber)}
+.mv-val{font-size:20px;font-weight:300;line-height:1.1;margin-bottom:3px}
+.mv-card.sk .mv-val{color:var(--sk-mid)}.mv-card.sf .mv-val{color:var(--sf-mid)}
+.mv-card.red .mv-val{color:var(--red)}.mv-card.warn .mv-val{color:var(--amber)}
+.mv-sub{font-size:11px;color:var(--text2)}
+
+.footer{margin-top:4rem;text-align:center;font-size:11px;color:var(--text3);letter-spacing:.04em}
+@media(max-width:660px){.kpi-strip,.kpi-strip.cols3,.kpi-strip.cols5{grid-template-columns:1fr 1fr}.grid2{grid-template-columns:1fr}.summary-grid,.resena-comp{grid-template-columns:1fr}.header h1{font-size:20px}.glosario-body{grid-template-columns:1fr}}
+</style>
+</head>
+<body>
+<div class="page">
+
+<!-- HEADER -->
+<div class="header">
+  <div>
+    <div class="eyebrow">Laboratorio BEK · CX</div>
+    <h1><strong>Reporte Mensual</strong> · Agosto 2026</h1>
+  </div>
+  <div class="header-meta">3 – 26 agosto 2026<br>Datos parciales hasta 26/08</div>
+</div>
+
+<!-- GLOSARIO -->
+<details class="glosario">
+  <summary>Glosario de términos</summary>
+  <div class="glosario-body">
+    <div class="glos-item"><div class="glos-term">Atendidos WPP</div><div class="glos-def">Bajadas reales del backlog intradía en WhatsApp: MAX(0, 9hs−18hs) + nuevos respondidos. No incluye tickets de Burbuxa.</div></div>
+    <div class="glos-item"><div class="glos-term">Backlog / Pendientes</div><div class="glos-def">Mensajes sin responder al abrir (9hs) o al cerrar (18hs). Cuando la línea llega a 0, se vació la bandeja ese día.</div></div>
+    <div class="glos-item"><div class="glos-term">Tickets Burbuxa (Todos)</div><div class="glos-def">Acumulado agosto en Burbuxa. El 25/08 el contador SK se reinició (3.600→53), los datos se leen en contexto.</div></div>
+    <div class="glos-item"><div class="glos-term">Sin leer (Burbuxa)</div><div class="glos-def">Tickets que el bot archivó pero no fueron revisados por el equipo humano. Alta cantidad = demanda no resuelta.</div></div>
+    <div class="glos-item"><div class="glos-term">Resueltos por IA</div><div class="glos-def">Tickets que Burbuxa cerró sin intervención humana. Un reopen rate alto indica que el bot cierra sin resolver de verdad.</div></div>
+    <div class="glos-item"><div class="glos-term">Cotizaciones / Reenvíos OCA</div><div class="glos-def">Consultas por envíos demorados o perdidos con OCA. Requieren revisión manual en el panel del courier.</div></div>
+    <div class="glos-item"><div class="glos-term">Merchant Voice</div><div class="glos-def">Función de Burbuxa que detecta riesgo de pérdida de cliente y puede disparar alertas o campañas de retención.</div></div>
+    <div class="glos-item"><div class="glos-term">📊 Dato estimado</div><div class="glos-def">Días donde muchos chats no aparecían en WPP pero sí en Burbuxa. El dato de atendidos puede estar subestimado.</div></div>
+  </div>
+</details>
+
+<!-- RESUMEN GENERAL -->
+<div class="sec-label">Resumen general · agosto 2026 · comparativa 3 marcas</div>
+<div class="summary-grid">
+  <div class="brand-summary">
+    <div class="brand-summary-header sk">🟣 Skinko</div>
+    <div class="brand-summary-body">
+      <div class="bs-main sk">420</div>
+      <div class="bs-main-label">Chats WPP atendidos · prom. 25/día · máx. 69</div>
+      <div class="bs-row"><span class="bs-label">Días bandeja en 0</span><span class="bs-val grn">4</span></div>
+      <div class="bs-row"><span class="bs-label">Pend. prom. al cierre</span><span class="bs-val">~12</span></div>
+      <div class="bs-row"><span class="bs-label">Mails atendidos</span><span class="bs-val">631 · ~49/día</span></div>
+      <div class="bs-row"><span class="bs-label">Tópico principal WPP</span><span class="bs-val">Envíos / Web</span></div>
+      <div class="bs-row"><span class="bs-label">Tickets Burbuxa</span><span class="bs-val sk">3.286</span></div>
+      <div class="bs-row"><span class="bs-label">IA resuelve sola</span><span class="bs-val grn">72% prom. ↑</span></div>
+    </div>
+  </div>
+  <div class="brand-summary">
+    <div class="brand-summary-header sf">🔵 SkinFree</div>
+    <div class="brand-summary-body">
+      <div class="bs-main sf">380</div>
+      <div class="bs-main-label">Chats WPP atendidos · prom. ~22/día</div>
+      <div class="bs-row"><span class="bs-label">Días bandeja en 0</span><span class="bs-val amber">2</span></div>
+      <div class="bs-row"><span class="bs-label">Pend. prom. al cierre</span><span class="bs-val red">82</span></div>
+      <div class="bs-row"><span class="bs-label">Mails respondidos</span><span class="bs-val">40 · dato desde 18/08</span></div>
+      <div class="bs-row"><span class="bs-label">Tópico principal WPP</span><span class="bs-val">Envíos / Seguimiento</span></div>
+      <div class="bs-row"><span class="bs-label">Tickets Burbuxa</span><span class="bs-val sf">131 <small style="color:var(--text3)">(desde 18/08)</small></span></div>
+      <div class="bs-row"><span class="bs-label">IA resuelve sola</span><span class="bs-val amber">sin dato completo</span></div>
+    </div>
+  </div>
+  <div class="brand-summary">
+    <div class="brand-summary-header cel">🟢 Celimax</div>
+    <div class="brand-summary-body">
+      <div class="bs-main cel">106</div>
+      <div class="bs-main-label">Chats WPP atendidos · prom. ~6/día</div>
+      <div class="bs-row"><span class="bs-label">Días bandeja en 0</span><span class="bs-val grn">11 (73%)</span></div>
+      <div class="bs-row"><span class="bs-label">Pend. prom. al cierre</span><span class="bs-val grn">~1</span></div>
+      <div class="bs-row"><span class="bs-label">Mails recibidos</span><span class="bs-val">288 · ~22/día</span></div>
+      <div class="bs-row"><span class="bs-label">Tópico principal WPP</span><span class="bs-val">Asesoramiento</span></div>
+      <div class="bs-row"><span class="bs-label">Tickets Burbuxa</span><span class="bs-val">No aplica</span></div>
+      <div class="bs-row"><span class="bs-label">IA resuelve sola</span><span class="bs-val">—</span></div>
+    </div>
+  </div>
+</div>
+
+<!-- ALERTAS — individuales colapsables -->
+<div class="sec-label">Alertas del mes</div>
+<div class="alertas-bloque">
+  <details class="alerta-item red">
+    <summary><span class="dot"></span>🔴 Bloqueos de WhatsApp reiterados — SF y SK<span class="arr">▼</span></summary>
+    <div class="alerta-body">SkinFree bloqueado el 13/08, 21/08 y 24/08. Skinko restringido el 21/08 y 25/08. Cada bloqueo genera acumulación directa de backlog que tarda días en recuperarse. El 24/08 SF superó los 190 mensajes pendientes.</div>
+  </details>
+  <details class="alerta-item red">
+    <summary><span class="dot"></span>🔴 Backlog SkinFree creciente desde 18/08<span class="arr">▼</span></summary>
+    <div class="alerta-body">Desde el 18/08, SkinFree abre con 82–190 mensajes pendientes y no logra vaciarlo al cierre. Promedio al cierre: 82 mensajes. El 26/08 SF siguió respondiendo mensajes acumulados del 24/ago porque el WPP continuaba bloqueado.</div>
+  </details>
+  <details class="alerta-item amber">
+    <summary><span class="dot"></span>🟡 Reopen rate Burbuxa SK elevado (56% promedio)<span class="arr">▼</span></summary>
+    <div class="alerta-body">El bot cierra tickets sin resolver realmente: 56% promedio de reabiertos en el mes. Bajó en la última semana (37.4% sem 20–26/ago), lo que indica mejora real. A continuar monitoreando.</div>
+  </details>
+  <details class="alerta-item amber">
+    <summary><span class="dot"></span>🟡 Datos de mails incompletos<span class="arr">▼</span></summary>
+    <div class="alerta-body">SK no tiene registro antes del 06/08 y el mail info@skinko se cerró el 12/08. SkinFree solo tiene datos desde el 18/08. Todos los totales son mínimos reales.</div>
+  </details>
+  <details class="alerta-item green">
+    <summary><span class="dot"></span>🟢 IA mejorando semana a semana — Skinko<span class="arr">▼</span></summary>
+    <div class="alerta-body">Burbuxa Skinko pasó de resolver el 67.7% sola en sem 1 al 80.7% en sem 5 (20–26/ago). El handle time bajó de 10h a 3h. El p90 de respuesta humana bajó de 20h a 11h.</div>
+  </details>
+  <details class="alerta-item green">
+    <summary><span class="dot"></span>🟢 Backlog histórico de reseñas respondido (6/08)<span class="arr">▼</span></summary>
+    <div class="alerta-body">El 06/08 se respondieron 1.211 reseñas históricas acumuladas en Judge.me Skinko en un solo día. Acceso a Google Reseñas habilitado desde ~14/08.</div>
+  </details>
+  <details class="alerta-item sk">
+    <summary><span class="dot"></span>🔵 Oportunidades Merchant Voice sin activar<span class="arr">▼</span></summary>
+    <div class="alerta-body">SK: 7.111 clientes dormidos 90+ días → potencial 41M–83M ARS. SF: 11.104 clientes → 57M–114M ARS (el cohorte más grande). Cross-sell SK: MEDITHERAPY→DR. ALTHEA (afinidad 21.75x). Cross-sell SF: Dr.Althea Retinol→Flat Iron Eye Roller (afinidad 43.68x).</div>
+  </details>
+</div>
+
+<!-- ═══════ TABS ═══════ -->
+<div class="tabs-bar">
+  <button class="tab-btn active" onclick="showTab('wpp',this)">💬 WhatsApp</button>
+  <button class="tab-btn" onclick="showTab('burbuxa',this)">🤖 Burbuxa</button>
+  <button class="tab-btn" onclick="showTab('mails',this)">📧 Mails</button>
+  <button class="tab-btn" onclick="showTab('resenas',this)">⭐ Reseñas</button>
+  <button class="tab-btn" onclick="showTab('conting',this)">⚠️ Contingencias &amp; Stock</button>
+</div>
+
+<!-- ══════════════════ TAB: WHATSAPP ══════════════════ -->
+<div class="tab-panel active" id="tp-wpp">
+
+  <!-- KPIs comparativos 3 marcas -->
+  <div class="sec-label">Chats atendidos · comparativa 3 marcas</div>
+  <div class="summary-grid" style="margin-bottom:1.5rem">
+    <div class="brand-summary">
+      <div class="brand-summary-header sk">🟣 Skinko</div>
+      <div class="brand-summary-body">
+        <div class="bs-main sk">420</div>
+        <div class="bs-main-label">atendidos · prom. 25/día · máx. 69</div>
+        <div class="bs-row"><span class="bs-label">Días en 0 al cierre</span><span class="bs-val grn">5 <small style="color:var(--text3)">6·13·20·25·26/ago</small></span></div>
+        <div class="bs-row"><span class="bs-label">Pendientes prom. cierre</span><span class="bs-val">12</span></div>
+      </div>
+    </div>
+    <div class="brand-summary">
+      <div class="brand-summary-header sf">🔵 SkinFree</div>
+      <div class="brand-summary-body">
+        <div class="bs-main sf">380</div>
+        <div class="bs-main-label">atendidos · prom. ~22/día</div>
+        <div class="bs-row"><span class="bs-label">Días en 0 al cierre</span><span class="bs-val amber">2 <small style="color:var(--text3)">7/ago · 12/ago</small></span></div>
+        <div class="bs-row"><span class="bs-label">Pendientes prom. cierre</span><span class="bs-val red">82</span></div>
+      </div>
+    </div>
+    <div class="brand-summary">
+      <div class="brand-summary-header cel">🟢 Celimax</div>
+      <div class="brand-summary-body">
+        <div class="bs-main cel">106</div>
+        <div class="bs-main-label">atendidos · prom. ~6/día</div>
+        <div class="bs-row"><span class="bs-label">Días en 0 al cierre</span><span class="bs-val grn">11 · 73% de los días ✅</span></div>
+        <div class="bs-row"><span class="bs-label">Pendientes prom. cierre</span><span class="bs-val grn">2</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Gráfico comparativo SK+SF -->
+  <div class="card">
+    <div class="card-title">Pendientes diarios · apertura 9hs vs cierre 18hs · SK y SF</div>
+    <canvas id="chartWppComp" height="160"></canvas>
+    <p class="note">📊 Barras = pendientes al abrir (9hs). Líneas = lo que queda al cerrar (18hs). Cuando la línea llega a 0 → se vació la bandeja ese día y todos esos mensajes fueron respondidos. Si la línea sube → se acumulan para el día siguiente. 26/08: SK cerró en 0. SF continuaba bloqueada (>190).</p>
+  </div>
+
+  <!-- Tabla detalle diario -->
+  <div class="card">
+    <div class="card-title">Detalle diario · pendientes y atendidos</div>
+    <div class="inline-alert warn">📊 = días donde muchos chats no figuraban en WhatsApp pero sí en Burbuxa. El dato de "atendidos" puede estar subestimado — el equipo trabajó más de lo que el contador de WPP mostraba.</div>
+    <table class="data-table">
+      <thead>
+        <tr>
+          <th>Fecha</th>
+          <th colspan="3" style="color:var(--sk-mid)">SKINKO</th>
+          <th colspan="3" style="color:var(--sf-mid)">SKINFREE</th>
+          <th style="color:var(--cel-mid)">CX · Aten.</th>
+        </tr>
+        <tr>
+          <th></th><th>9hs</th><th>18hs</th><th>Aten.</th>
+          <th>9hs</th><th>18hs</th><th>Aten.</th><th></th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr><td>03/08 📊</td><td>40</td><td>40</td><td>3</td><td>72</td><td>43</td><td>29</td><td>12</td></tr>
+        <tr><td>04/08</td><td>71</td><td>2</td><td class="val-sk">69</td><td>71</td><td>51</td><td>29</td><td>17</td></tr>
+        <tr><td>05/08</td><td>25</td><td>8</td><td>31</td><td>79</td><td>29</td><td>50</td><td>6</td></tr>
+        <tr><td>06/08</td><td>24</td><td class="val-green">0 ✅</td><td>24</td><td>54</td><td>2</td><td>52</td><td>8</td></tr>
+        <tr><td>07/08</td><td>18</td><td>8</td><td>10</td><td>22</td><td class="val-green">0 ✅</td><td>22</td><td>6</td></tr>
+        <tr><td>10/08</td><td>46</td><td>6</td><td>40</td><td>80</td><td>30</td><td>54</td><td>10</td></tr>
+        <tr><td>11/08</td><td>38</td><td>3</td><td>36</td><td>53</td><td>15</td><td>38</td><td>2</td></tr>
+        <tr><td>12/08</td><td>22</td><td>16</td><td>14</td><td>36</td><td class="val-green">0 ✅</td><td>36</td><td>2</td></tr>
+        <tr><td>13/08</td><td>40</td><td class="val-green">0 ✅</td><td>40</td><td>22</td><td>12</td><td>22</td><td>4</td></tr>
+        <tr><td>14/08</td><td>10</td><td>5</td><td>5</td><td>71</td><td>24</td><td>47</td><td>7</td></tr>
+        <tr><td>18/08 📊</td><td>45</td><td>32</td><td>13</td><td>82</td><td>81</td><td class="val-red">1</td><td>15</td></tr>
+        <tr><td>19/08 📊</td><td>46</td><td>18</td><td>42</td><td>92</td><td>105</td><td class="val-red">+13</td><td>1</td></tr>
+        <tr><td>20/08 📊</td><td>34</td><td class="val-green">0 ✅</td><td>34</td><td>110</td><td>130</td><td class="val-red">+20</td><td>5</td></tr>
+        <tr><td>21/08 📊</td><td>14</td><td>6</td><td>14</td><td>151</td><td>159</td><td class="val-red">+8</td><td>3</td></tr>
+        <tr><td>24/08</td><td>24</td><td>1</td><td>23</td><td>190</td><td class="val-green">0 ✅</td><td class="val-sf">190</td><td>13</td></tr>
+        <tr><td>25/08 📊</td><td>17</td><td class="val-green">0 ✅</td><td>17</td><td colspan="3" style="color:var(--text3);font-style:italic">SF sin dato · continuó atendiendo lo del 24/ago</td><td>5</td></tr>
+        <tr class="today"><td>26/08</td><td>11</td><td class="val-green">0 ✅</td><td>11</td><td colspan="3" style="color:var(--red);font-style:italic">SF bloqueada · >190 pend. · respondiendo por mail</td><td class="val-green">5 → 0</td></tr>
+      </tbody>
+    </table>
+    <p class="note">📊 = días donde muchos chats no figuraban en WPP pero sí en Burbuxa. Valores en rojo en SF del 18–21/ago indican que los mensajes crecieron durante el día (más entradas que salidas).</p>
+  </div>
+
+  <!-- Tópicos Celimax -->
+  <div class="sec-label" style="margin-top:1.5rem">Tópicos · Celimax · WPP Business · agosto (SK y SF se registran en Burbuxa)</div>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Distribución de consultas · Celimax</div>
+      <div class="hbar-list">
+        <div><div class="hbar-header"><span class="hbar-name">Asesoramiento / Info</span><span class="hbar-count">~50</span></div><div class="hbar-track"><div class="hbar-fill c3" style="width:100%"></div></div></div>
+        <div><div class="hbar-header"><span class="hbar-name">Cotizaciones / Reenvíos OCA</span><span class="hbar-count">~30</span></div><div class="hbar-track"><div class="hbar-fill c3" style="width:60%"></div></div></div>
+        <div><div class="hbar-header"><span class="hbar-name">Marketing / Colaboraciones</span><span class="hbar-count">~30</span></div><div class="hbar-track"><div class="hbar-fill c3" style="width:60%"></div></div></div>
+        <div><div class="hbar-header"><span class="hbar-name">Web Envíos</span><span class="hbar-count">~20</span></div><div class="hbar-track"><div class="hbar-fill c3" style="width:40%"></div></div></div>
+        <div><div class="hbar-header"><span class="hbar-name">Web general</span><span class="hbar-count">~11</span></div><div class="hbar-track"><div class="hbar-fill c3" style="width:22%"></div></div></div>
+        <div><div class="hbar-header"><span class="hbar-name">Reintegro</span><span class="hbar-count">8</span></div><div class="hbar-track"><div class="hbar-fill c3" style="width:16%"></div></div></div>
+        <div><div class="hbar-header"><span class="hbar-name">Pedido incompleto</span><span class="hbar-count">4</span></div><div class="hbar-track"><div class="hbar-fill c3" style="width:8%"></div></div></div>
+        <div><div class="hbar-header"><span class="hbar-name">Cambio / Cupón / Contracargo</span><span class="hbar-count">4</span></div><div class="hbar-track"><div class="hbar-fill amber" style="width:8%"></div></div></div>
+      </div>
+      <p class="note">Total ~157 chats. Conteo manual por etiqueta WPP Business.</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Gráfico · Celimax</div>
+      <canvas id="chartCxTopicos" height="200"></canvas>
+      <p class="note">El 32% son asesoramientos especializados de skincare — el tópico más importante. El 19% problemas logísticos OCA. El 19% contactos de marketing.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB: BURBUXA ══════════════════ -->
+<div class="tab-panel" id="tp-burbuxa">
+  
+  <!-- Comparativa SK vs SF -->
+  <div class="sec-label">Comparativa Skinko vs SkinFree · agosto</div>
+  <div class="grid2" style="margin-bottom:1.5rem">
+    <div class="brand-summary">
+      <div class="brand-summary-header sk">🟣 Skinko</div>
+      <div class="brand-summary-body">
+        <div class="bs-main sk">3.286</div>
+        <div class="bs-main-label">tickets totales · 3–26 ago</div>
+        <div class="bs-row"><span class="bs-label">Resueltos por IA</span><span class="bs-val grn">72% prom. ↑</span></div>
+        <div class="bs-row"><span class="bs-label">Tasa resueltos</span><span class="bs-val amber">~40%</span></div>
+        <div class="bs-row"><span class="bs-label">Reabiertos prom.</span><span class="bs-val red">56%</span></div>
+        <div class="bs-row"><span class="bs-label">Backlog al 25/08</span><span class="bs-val amber">353</span></div>
+        <div class="bs-row"><span class="bs-label">Resp. humana p90</span><span class="bs-val grn">11h ↓</span></div>
+      </div>
+    </div>
+    <div class="brand-summary">
+      <div class="brand-summary-header sf">🔵 SkinFree</div>
+      <div class="brand-summary-body">
+        <div class="bs-main sf">1.181</div>
+        <div class="bs-main-label">tickets Burbuxa · 4–26/ago</div>
+        <div class="bs-row"><span class="bs-label">Sin leer (25/08 9hs)</span><span class="bs-val amber">47</span></div>
+        <div class="bs-row"><span class="bs-label">Tickets todos (25/08)</span><span class="bs-val">113</span></div>
+        <div class="bs-row"><span class="bs-label">Tendencia sin leer</span><span class="bs-val grn">baja: 91→47</span></div>
+        <div class="bs-row"><span class="bs-label">Dato completo</span><span class="bs-val amber">desde 18/08 solo</span></div>
+        <div class="bs-row"><span class="bs-label">26/08</span><span class="bs-val">sin dato (bloqueado)</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Brand tabs para detalle -->
+  <div class="brand-tabs">
+    <button class="brand-btn sk active" onclick="showBrand('burb','sk',this)">🟣 Skinko · detalle</button>
+    <button class="brand-btn sf" onclick="showBrand('burb','sf',this)">🔵 SkinFree · detalle</button>
+  </div>
+
+  <!-- BURBUXA · SK -->
+  <div class="brand-panel active" id="burb-sk">
+    <div class="kpi-strip cols5">
+      <div class="kpi sk"><div class="kpi-label">Tickets totales</div><div class="kpi-val sk">3.286</div><div class="kpi-sub">3–25 ago · parcial</div></div>
+      <div class="kpi grn"><div class="kpi-label">Resueltos por IA</div><div class="kpi-val grn">72%</div><div class="kpi-sub">prom. ↑ cada semana</div></div>
+      <div class="kpi amb"><div class="kpi-label">Tasa resueltos</div><div class="kpi-val amb">~40%</div><div class="kpi-sub">baja en todo el mes</div></div>
+      <div class="kpi red"><div class="kpi-label">Reabiertos</div><div class="kpi-val red">56%</div><div class="kpi-sub">promedio mensual</div></div>
+      <div class="kpi amb"><div class="kpi-label">Backlog 25/08</div><div class="kpi-val amb">353</div><div class="kpi-sub">máx: 594 (sem 3)</div></div>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Evolución semanal · Burbuxa Skinko</div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>Semana</th><th>Tickets</th>
+            <th title="% resueltos sin intervención humana">Resueltos IA</th>
+            <th title="% del total que quedó en estado resuelto">Resueltos</th>
+            <th title="Tickets que se reabrieron tras cerrarse">Reabiertos</th>
+            <th title="Tickets sin respuesta acumulados">Backlog</th>
+            <th title="Tiempo hasta primera respuesta humana (percentil 90)">Resp. humana p90</th>
+            <th title="Clientes que volvieron a contactar">Volvieron</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>1–7 ago</td><td>847</td><td>67.7%</td><td class="val-amber">41.9%</td><td class="val-red">58.7%</td><td>492 <small>(25d)</small></td><td>20h</td><td>10.8%</td></tr>
+          <tr><td>7–13 ago</td><td>885</td><td>67.7%</td><td class="val-amber">40.9%</td><td class="val-red">56.6%</td><td>523 <small>(19d)</small></td><td>17h</td><td>8.95%</td></tr>
+          <tr><td>14–20 ago</td><td>1.014</td><td class="val-grn">73.2%</td><td class="val-amber">41.4%</td><td class="val-red">52.0%</td><td>594 <small>(12d)</small></td><td>19h</td><td>8.62%</td></tr>
+          <tr><td>21–25 ago</td><td>540</td><td class="val-grn">80.0% ↑</td><td>34.6%</td><td class="val-red">56.8%</td><td>353 <small>(4.8d)</small></td><td class="val-green">11h ↓</td><td>4.26%</td></tr>
+          <tr class="today"><td>20–26 ago ✅</td><td>771</td><td class="val-grn">80.7% ↑</td><td class="val-grn">67.1%</td><td class="val-green">37.4% ↓</td><td>254 <small>(6.5d)</small></td><td class="val-green">50m · p90: 11h</td><td>5.5%</td></tr>
+        </tbody>
+      </table>
+      <div class="inline-alert ok" style="margin-top:.75rem">🟢 La IA mejoró semana a semana: pasó de resolver el 67.7% sola en sem 1 al 80.7% en sem 5. El handle time bajó de 10h a 3h. El p90 de respuesta humana también bajó de 20h a 11h.</div>
+      <p class="note">Sem 21–25: solo lun–vier. Sem 20–26: semana completa — reabiertos bajan a 37%.</p>
+    </div>
+
+    <div class="card">
+      <div class="card-title">Evolución tickets sin leer · Skinko · 9hs</div>
+      <canvas id="chartSkBurb" height="140"></canvas>
+      <p class="note">Sin leer = tickets que el bot archivó pero no fueron revisados por el equipo. Tendencia a la baja desde el 18/08 — positivo.</p>
+    </div>
+
+    <div class="grid2">
+      <div class="card" style="margin-bottom:0">
+        <div class="card-title">Tópicos etiquetados · Skinko (Burbuxa)</div>
+        <div class="inline-alert sk" style="margin-bottom:.75rem">Solo tickets con etiqueta asignada. El 60–70% del volumen no tiene etiqueta — es una mejora a pedir a Burbuxa.</div>
+        <div class="hbar-list">
+          <div><div class="hbar-header"><span class="hbar-name">Importante (escalada)</span><span class="hbar-count">128</span></div><div class="hbar-track"><div class="hbar-fill c1" style="width:100%"></div></div></div>
+          <div><div class="hbar-header"><span class="hbar-name">Web Envíos</span><span class="hbar-count">64</span></div><div class="hbar-track"><div class="hbar-fill c2" style="width:50%"></div></div></div>
+          <div><div class="hbar-header"><span class="hbar-name">Cambio</span><span class="hbar-count">63</span></div><div class="hbar-track"><div class="hbar-fill c3" style="width:49%"></div></div></div>
+          <div><div class="hbar-header"><span class="hbar-name">Cancelación</span><span class="hbar-count">49</span></div><div class="hbar-track"><div class="hbar-fill c3" style="width:38%"></div></div></div>
+          <div><div class="hbar-header"><span class="hbar-name">Cupón</span><span class="hbar-count">45</span></div><div class="hbar-track"><div class="hbar-fill c4" style="width:35%"></div></div></div>
+          <div><div class="hbar-header"><span class="hbar-name">Error email</span><span class="hbar-count">34</span></div><div class="hbar-track"><div class="hbar-fill c5" style="width:27%"></div></div></div>
+          <div><div class="hbar-header"><span class="hbar-name">Cotizaciones / Reenvíos OCA</span><span class="hbar-count">31</span></div><div class="hbar-track"><div class="hbar-fill c6" style="width:24%"></div></div></div>
+          <div><div class="hbar-header"><span class="hbar-name">Error Pedido</span><span class="hbar-count">22</span></div><div class="hbar-track"><div class="hbar-fill c7" style="width:17%"></div></div></div>
+          <div><div class="hbar-header"><span class="hbar-name">Reacciones adversas</span><span class="hbar-count">12</span></div><div class="hbar-track"><div class="hbar-fill c5" style="width:9%"></div></div></div>
+          <div><div class="hbar-header"><span class="hbar-name">Falla</span><span class="hbar-count">10</span></div><div class="hbar-track"><div class="hbar-fill c7" style="width:8%"></div></div></div>
+        </div>
+      </div>
+
+      <div class="card" style="margin-bottom:0">
+        <div class="card-title">Merchant Voice · SK y SF</div>
+        <div class="mv-grid">
+          <div class="mv-card sk"><div class="mv-label">Skinko · dormidos 90+ días</div><div class="mv-val">41M–83M ARS</div><div class="mv-sub">7.111 clientes · campaña sin activar</div></div>
+          <div class="mv-card sf"><div class="mv-label">SkinFree · dormidos 90+ días</div><div class="mv-val">57M–114M ARS</div><div class="mv-sub">11.104 clientes · el cohorte más grande</div></div>
+          <div class="mv-card warn"><div class="mv-label">Cross-sell · SK</div><div class="mv-val" style="font-size:13px;font-weight:500">MEDITHERAPY → DR. ALTHEA</div><div class="mv-sub">935k–2M ARS · 81 compradores · afinidad 21.75x</div></div>
+          <div class="mv-card warn"><div class="mv-label">Cross-sell · SF</div><div class="mv-val" style="font-size:13px;font-weight:500">Dr.Althea Retinol → Eye Roller</div><div class="mv-sub">310k–516k ARS · 27 compradores · afinidad 43.68x</div></div>
+          <div class="mv-card red" style="grid-column:span 2"><div class="mv-label">Problema · Delineador Dual de Labios</div><div class="mv-val" style="font-size:14px">10% reembolsos</div><div class="mv-sub">12 de 124 pedidos vs 1% promedio tienda. Investigar antes de escalar mensajes.</div></div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- BURBUXA · SF -->
+  <div class="brand-panel" id="burb-sf">
+    <div class="inline-alert warn">SkinFree empezó a registrar datos en Burbuxa a partir del 04/08. Datos: 4–26 agosto 2026.</div>
+    <div class="kpi-strip cols3">
+      <div class="kpi sf"><div class="kpi-label">Tickets totales</div><div class="kpi-val sf">1.181</div><div class="kpi-sub">4–26 ago</div></div>
+      <div class="kpi grn"><div class="kpi-label">Resueltos por IA</div><div class="kpi-val grn">70.2%</div><div class="kpi-sub">sin intervención humana</div></div>
+      <div class="kpi amb"><div class="kpi-label">Reabiertos</div><div class="kpi-val amb">29.7%</div><div class="kpi-sub">promedio mensual</div></div>
+    </div>
+    <div class="kpi-strip cols3">
+      <div class="kpi amb"><div class="kpi-label">Backlog abierto</div><div class="kpi-val amb">99</div><div class="kpi-sub">9 días de acumulación</div></div>
+      <div class="kpi amb"><div class="kpi-label">Resp. humana</div><div class="kpi-val amb">3.6h</div><div class="kpi-sub">p90: 21h</div></div>
+      <div class="kpi grn"><div class="kpi-label">1ra respuesta IA</div><div class="kpi-val grn">34s</div><div class="kpi-sub">p90: 2.9m</div></div>
+    </div>
+    <div class="card">
+      <div class="card-title">Tópicos · SkinFree Burbuxa · agosto acumulado</div>
+      <canvas id="chartSfBurbTop" height="180"></canvas>
+      <p class="note">Top tópicos etiquetados. "Sin etiqueta" = 523 tickets no clasificados (44% del total).</p>
+    </div>
+    <div class="card">
+      <div class="card-title">Tickets todos vs sin leer · SkinFree (18–26/08 · período con dato diario)</div>
+      <canvas id="chartSfBurb" height="130"></canvas>
+      <p class="note">Sin leer bajó de 91 (18/08) a 47 (25/08). 26/08: sin dato (WPP bloqueado). El pico del 24/08 (121 sin leer) coincide con el bloqueo de WPP desde las 14hs.</p>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB: MAILS ══════════════════ -->
+<div class="tab-panel" id="tp-mails">
+  <div class="inline-alert warn">Datos parciales: SK no tiene registro completo antes del 06/08. SF empieza desde el 18/08. Totales son mínimos reales.</div>
+
+  <!-- Resumen comparativo -->
+  <div class="sec-label" style="margin-top:1rem">Mails · resumen comparativo</div>
+  <div class="summary-grid" style="margin-bottom:1.5rem">
+    <div class="brand-summary">
+      <div class="brand-summary-header sk">🟣 Skinko</div>
+      <div class="brand-summary-body">
+        <div class="bs-main sk">4.450</div>
+        <div class="bs-main-label">recibidos · incl. 3.600 acumulados el 4/ago</div>
+        <div class="bs-row"><span class="bs-label">Atendidos</span><span class="bs-val sk">631</span></div>
+        <div class="bs-row"><span class="bs-label">Prom. atendidos/día</span><span class="bs-val">~49</span></div>
+      </div>
+    </div>
+    <div class="brand-summary">
+      <div class="brand-summary-header sf">🔵 SkinFree</div>
+      <div class="brand-summary-body">
+        <div class="bs-main sf">974</div>
+        <div class="bs-main-label">recibidos · dato desde 18/ago únicamente</div>
+        <div class="bs-row"><span class="bs-label">Respondidos en agosto</span><span class="bs-val sf">40</span></div>
+        <div class="bs-row"><span class="bs-label">Dato disponible desde</span><span class="bs-val amber">18/08</span></div>
+      </div>
+    </div>
+    <div class="brand-summary">
+      <div class="brand-summary-header cel">🟢 Celimax</div>
+      <div class="brand-summary-body">
+        <div class="bs-main cel">288</div>
+        <div class="bs-main-label">recibidos · flujo estable todo el mes</div>
+        <div class="bs-row"><span class="bs-label">Prom./día</span><span class="bs-val cel">~22</span></div>
+        <div class="bs-row"><span class="bs-label">Días cerró en 0</span><span class="bs-val grn">casi siempre</span></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tablas detalle -->
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Mails Skinko · detalle diario</div>
+      <table class="data-table">
+        <thead><tr><th>Fecha</th><th>9hs</th><th>13hs</th><th>18hs</th><th>Aten.</th></tr></thead>
+        <tbody>
+          <tr><td>04/08</td><td>3.600</td><td>–</td><td>–</td><td>–</td></tr>
+          <tr><td>06/08</td><td>60</td><td>73</td><td>–</td><td class="val-sk">~13</td></tr>
+          <tr><td>07/08</td><td>113</td><td>33</td><td>30</td><td class="val-sk">83</td></tr>
+          <tr><td>10/08</td><td>145</td><td>–</td><td>85</td><td class="val-sk">60</td></tr>
+          <tr><td>11/08</td><td>120</td><td>61</td><td class="val-green">0</td><td class="val-sk">120</td></tr>
+          <tr><td>12/08 ⚠️</td><td>24</td><td>20</td><td>20</td><td>4</td></tr>
+          <tr><td>13/08</td><td>66</td><td>13</td><td class="val-green">0</td><td class="val-sk">66</td></tr>
+          <tr><td>14/08</td><td>6</td><td class="val-green">0</td><td class="val-green">0</td><td class="val-sk">6</td></tr>
+          <tr><td>18/08</td><td>111</td><td>24</td><td>–</td><td class="val-sk">~87</td></tr>
+          <tr><td>19/08</td><td>31</td><td>8</td><td>2</td><td class="val-sk">29</td></tr>
+          <tr><td>20/08</td><td>18</td><td>11</td><td>1</td><td class="val-sk">17</td></tr>
+          <tr><td>21/08</td><td>20</td><td>10</td><td>10</td><td class="val-sk">10</td></tr>
+          <tr><td>24/08</td><td>123</td><td>22</td><td class="val-green">0</td><td class="val-sk">123</td></tr>
+          <tr><td>25/08</td><td>13</td><td class="val-green">0</td><td>–</td><td class="val-sk">13</td></tr>
+          <tr class="today"><td>26/08</td><td>15</td><td class="val-green">0</td><td class="val-green">0</td><td class="val-green">15</td></tr>
+        </tbody>
+      </table>
+      <p class="note">⚠️ 12/ago: cierre del mail info@skinko. El 04/ago = 3.600 acumulados históricos.</p>
+    </div>
+    <div>
+      <div class="card">
+        <div class="card-title">Mails Celimax · diario</div>
+        <table class="data-table">
+          <thead><tr><th>Fecha</th><th>9hs</th><th>13hs</th><th>18hs</th></tr></thead>
+          <tbody>
+            <tr><td>06/08</td><td>213</td><td>1</td><td>–</td></tr>
+            <tr><td>07–14/08</td><td>1–4</td><td class="val-green">0</td><td class="val-green">0</td></tr>
+            <tr><td>18/08</td><td>16</td><td class="val-green">0</td><td class="val-green">0</td></tr>
+            <tr><td>19–21/08</td><td>6–8</td><td>0–2</td><td>0–2</td></tr>
+            <tr><td>24/08</td><td>15</td><td class="val-green">0</td><td>2</td></tr>
+            <tr><td>25/08</td><td>8</td><td>1</td><td>–</td></tr>
+            <tr class="today"><td>26/08</td><td>6</td><td class="val-green">0</td><td class="val-green">0</td></tr>
+          </tbody>
+        </table>
+        <p class="note">6/ago abrió con 213 acumulados. Desde el 7/ago: flujo bajo, casi siempre en 0.</p>
+      </div>
+      <div class="inline-alert info">Los datos de mails de SkinFree corresponden a Burbuxa y están disponibles solo desde el 18/08. El detalle diario se encuentra en la pestaña Burbuxa.</div>
+    </div>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB: RESEÑAS ══════════════════ -->
+<div class="tab-panel" id="tp-resenas">
+
+  <!-- Comparativa agosto las 3 marcas -->
+  <div class="sec-label">Comparativa agosto · las 3 marcas</div>
+  <div class="resena-comp">
+    <div class="rc-card">
+      <div class="rc-brand sk">🟣 Skinko · Judge.me</div>
+      <div class="rc-rating sk">4.89★</div>
+      <div class="rc-sub">1.351 reseñas · 4 meses</div>
+      <div class="rc-row"><span class="rc-row-label">5★</span><span class="rc-row-val" style="color:var(--green)">1.216 (90%)</span></div>
+      <div class="rc-row"><span class="rc-row-label">3★</span><span class="rc-row-val" style="color:var(--amber)">18 (1%)</span></div>
+      <div class="rc-row"><span class="rc-row-label">Respondidas agosto</span><span class="rc-row-val">1.589</span></div>
+    </div>
+    <div class="rc-card">
+      <div class="rc-brand sf">🔵 SkinFree · Google</div>
+      <div class="rc-rating sf">~93%</div>
+      <div class="rc-sub">positivas · dato desde 14/08</div>
+      <div class="rc-row"><span class="rc-row-label">Positivas</span><span class="rc-row-val" style="color:var(--green)">~230</span></div>
+      <div class="rc-row"><span class="rc-row-label">Negativas</span><span class="rc-row-val" style="color:var(--red)">~17</span></div>
+      <div class="rc-row"><span class="rc-row-label">Fortaleza</span><span class="rc-row-val">Envío rápido</span></div>
+    </div>
+    <div class="rc-card">
+      <div class="rc-brand cel">🟢 Celimax · Judge.me</div>
+      <div class="rc-rating cel">4.92★</div>
+      <div class="rc-sub">110 reseñas · 94% verificadas</div>
+      <div class="rc-row"><span class="rc-row-label">Positivas</span><span class="rc-row-val" style="color:var(--green)">94%</span></div>
+      <div class="rc-row"><span class="rc-row-label">Sin 3★, 2★ ni 1★</span><span class="rc-row-val" style="color:var(--green)">✅</span></div>
+      <div class="rc-row"><span class="rc-row-label">La mejor calificada</span><span class="rc-row-val" style="color:var(--cel-mid)">⭐ top</span></div>
+    </div>
+  </div>
+
+  <!-- Insights agosto rápidos -->
+  <div class="grid2" style="margin-bottom:1rem">
+    <div class="item-list">
+      <div class="item ok"><div class="item-title">06/08 · backlog histórico respondido</div><div class="item-desc">1.211 reseñas sin respuesta de Judge.me Skinko respondidas en un solo día. Hito de gestión del mes.</div></div>
+      <div class="item issue"><div class="item-title">SkinFree · postventa sin respuesta</div><div class="item-desc">Patrón recurrente en reseñas negativas: clientes sin respuesta por WPP, mail ni redes ante reclamos.</div></div>
+    </div>
+    <div class="item-list">
+      <div class="item warn"><div class="item-title">Skinko Alto Palermo · spike reciente</div><div class="item-desc">3 de las últimas 5 reseñas son negativas. Problema de capacitación: "no sé" como respuesta frecuente del equipo.</div></div>
+      <div class="item ok"><div class="item-title">Skinko Alto Avellaneda · benchmark</div><div class="item-desc">Cero reseñas negativas en el período. Referencia de buenas prácticas para las demás sucursales.</div></div>
+    </div>
+  </div>
+
+  <!-- Botón link al reporte completo -->
+  <div class="inline-alert info" style="margin-bottom:1rem">
+    ⭐ Para el análisis completo de los últimos 4 meses (Google Reseñas por sucursal + Judge.me por producto) abrí el documento de reseñas detallado ↓
+  </div>
+  <div class="card" style="text-align:center;padding:2rem">
+    <div style="font-size:16px;font-weight:500;color:var(--text);margin-bottom:.4rem">📄 Reporte de reseñas</div>
+    <div style="font-size:12px;color:var(--text3);margin-bottom:1.5rem">Últimos 4 meses (mayo – agosto) · Google por sucursal + Judge.me por producto</div>
+    <a href="resenas_google.html" target="_blank" style="display:inline-block;background:var(--sk-mid);color:#fff;font-family:'Inter',sans-serif;font-size:13px;font-weight:500;padding:.75rem 2rem;border-radius:8px;text-decoration:none;transition:opacity .15s" onmouseover="this.style.opacity='.85'" onmouseout="this.style.opacity='1'">Abrir reporte de reseñas ↗</a>
+  </div>
+</div>
+
+<!-- ══════════════════ TAB: CONTINGENCIAS & STOCK ══════════════════ -->
+<div class="tab-panel" id="tp-conting">
+
+  <!-- Contingencias por marca con chips -->
+  <div class="sec-label">Contingencias · todas las marcas · agosto 2026</div>
+  <div class="conting-list" style="margin-bottom:1.5rem">
+    <div class="conting-item daily"><div class="chips-row"><span class="chip sk">SK</span><span style="font-size:10px;color:var(--text3)">4–5 ago</span></div><div class="conting-desc">Gestiones internas de reportes → no se respondió en Skinko. Sin impacto en cliente externo pero afectó métricas.</div></div>
+    <div class="conting-item daily"><div class="chips-row"><span class="chip sk">SK</span><span style="font-size:10px;color:var(--text3)">6–7 ago</span></div><div class="conting-desc">No se podía marcar mensajes como no leídos en Burbuxa. Investigación de agentes IA. Mail info@skinko cerrado definitivamente.</div></div>
+    <div class="conting-item daily"><div class="chips-row"><span class="chip sk">SK</span><span style="font-size:10px;color:var(--text3)">11 ago</span></div><div class="conting-desc">SK subió 25 tickets de 13hs a 18hs y bajó. Comportamiento inusual sin causa confirmada.</div></div>
+    <div class="conting-item bloqueo"><div class="chips-row"><span class="chip sf">SF</span><span class="chip red">🔴 Bloqueo WPP</span><span style="font-size:10px;color:var(--text3)">13 ago</span></div><div class="conting-desc">WPP SkinFree bloqueado. Atención derivada por mail.</div></div>
+    <div class="conting-item daily"><div class="chips-row"><span class="chip sk">SK</span><span style="font-size:10px;color:var(--text3)">14 ago</span></div><div class="conting-desc">Daily equipo — SK bajó a cero y subió. No se pudo responder por reunión. SF creció a 33 al mediodía.</div></div>
+    <div class="conting-item plat"><div class="chips-row"><span class="chip sk">SK</span><span class="chip sf">SF</span><span style="font-size:10px;color:var(--text3)">18 ago</span></div><div class="conting-desc">SK: chats no aparecían en WhatsApp → se respondió por Burbuxa. Caída de Burbuxa ~40 min por la tarde. SF: caída Tienda Nube.</div></div>
+    <div class="conting-item plat"><div class="chips-row"><span class="chip sf">SF</span><span style="font-size:10px;color:var(--text3)">19 ago</span></div><div class="conting-desc">Caída de Tienda Nube SkinFree. Impacto en operación del día.</div></div>
+    <div class="conting-item logistica"><div class="chips-row"><span class="chip sk">SK</span><span class="chip cel">CL</span><span style="font-size:10px;color:var(--text3)">20–21 ago</span></div><div class="conting-desc">OCA sin actualizar seguimientos durante ~1 semana. Incertidumbre logística. Daily de 12 a 13hs impactó en SK. Múltiples consultas de clientes por envíos sin movimiento.</div></div>
+    <div class="conting-item bloqueo"><div class="chips-row"><span class="chip sf">SF</span><span class="chip red">🔴 Bloqueo WPP</span><span style="font-size:10px;color:var(--text3)">21 ago</span></div><div class="conting-desc">WPP SkinFree bloqueado desde las 14hs. SK restringido desde las 17hs.</div></div>
+    <div class="conting-item bloqueo"><div class="chips-row"><span class="chip sk">SK</span><span class="chip sf">SF</span><span class="chip red">🔴 Bloqueo WPP SF</span><span style="font-size:10px;color:var(--text3)">24 ago</span></div><div class="conting-desc">SK subió a 26 mensajes desde las 13hs. WPP SkinFree bloqueado desde las 14hs — dejó 190 pendientes.</div></div>
+    <div class="conting-item daily"><div class="chips-row"><span class="chip sk">SK</span><span style="font-size:10px;color:var(--text3)">25 ago</span></div><div class="conting-desc">Daily equipo — impacto en tiempo de atención.</div></div>
+    <div class="conting-item daily"><div class="chips-row"><span class="chip sk">SK</span><span style="font-size:10px;color:var(--text3)">26 ago</span></div><div class="conting-desc">Daily de 1.30hs — impacto en tiempo de atención.</div></div>
+  </div>
+  <div class="inline-alert warn">Los bloqueos de WPP (13, 21 y 24/ago) son el principal factor de acumulación de backlog en SkinFree. Pocos clientes se quejaron directamente — el impacto es silencioso pero acumulativo.</div>
+
+  <!-- Contactos extraños y reclamos -->
+  <div class="sec-label" style="margin-top:1.5rem">Reclamos registrados · agosto</div>
+  <div class="kpi-strip cols3" style="margin-bottom:1rem">
+    <div class="kpi red"><div class="kpi-label">Contactos extraños (total)</div><div class="kpi-val red">45</div><div class="kpi-sub">35 en un solo día (10/ago)</div></div>
+    <div class="kpi amb"><div class="kpi-label">Coony Foam · días con reclamo</div><div class="kpi-val amb">5</div><div class="kpi-sub">el más recurrente del mes</div></div>
+    <div class="kpi"><div class="kpi-label">Serum Medicube</div><div class="kpi-val">1</div><div class="kpi-sub">19/ago · caso aislado</div></div>
+  </div>
+  <div class="inline-alert warn" style="margin-bottom:1rem">El pico del 10/ago (35 contactos extraños) fue un incidente puntual. Coony Foam tuvo reclamos en 5 días distintos del mes — el más recurrente.</div>
+
+  <!-- Devoluciones OCA -->
+  <div class="sec-label">Devoluciones · OCA · todas las marcas</div>
+  <div class="kpi-strip cols3" style="margin-bottom:.75rem">
+    <div class="kpi sk"><div class="kpi-label">Skinko · devoluciones OCA</div><div class="kpi-val sk">~27</div><div class="kpi-sub">~12 pendientes · 15 completadas</div></div>
+    <div class="kpi sf"><div class="kpi-label">SkinFree · devoluciones OCA</div><div class="kpi-val sf">11</div><div class="kpi-sub">4 pendientes · 7 completadas</div></div>
+    <div class="kpi cel"><div class="kpi-label">Celimax · devoluciones OCA</div><div class="kpi-val cel">9</div><div class="kpi-sub">4 pendientes · 5 completadas</div></div>
+  </div>
+  <div class="inline-alert info" style="margin-bottom:1.5rem">Motivos: cotizaciones de reenvío, reintegros, casos donde OCA no entregó. La semana del 20/ago OCA estuvo sin actualizar seguimientos, generando contactos adicionales para informar a los clientes.</div>
+
+  <!-- Productos sin stock -->
+  <div class="sec-label">Productos sin stock · agosto · Skinko únicamente · cantidad = órdenes afectadas</div>
+  <div class="card">
+    <div class="card-title">Productos sin stock gestionados · agosto · Skinko</div>
+    <table class="data-table">
+      <thead><tr><th>Producto</th><th>Órdenes afectadas</th><th>Estado</th></tr></thead>
+      <tbody>
+        <tr><td>CELIMAX Pore + Dark Spot Brightening Cream 35ml</td><td>21</td><td><span class="badge green">Resuelto</span></td></tr>
+        <tr><td>SKIN1004 Hyalu-Cica Water-Fit Sun Serum 50ml</td><td>16</td><td><span class="badge green">Resuelto</span></td></tr>
+        <tr><td>MEDICUBE PDRN Pink Collagen Gel Mask</td><td>9</td><td><span class="badge green">Resuelto</span></td></tr>
+        <tr><td>SKIN1004 Centella Tone Brightening Capsule Ampoule 100ml</td><td>6</td><td><span class="badge green">Resuelto</span></td></tr>
+        <tr><td>Anua Niacinamide 10% + TXA 3% Serum</td><td>4</td><td><span class="badge green">Resuelto</span></td></tr>
+        <tr><td>SKIN1004 Centella Tone Brightening Capsule Ampoule 50ml</td><td>3</td><td><span class="badge green">Resuelto</span></td></tr>
+        <tr><td>MEDICUBE 2024 Zero Pore Pad 2.0</td><td>3</td><td><span class="badge green">Resuelto</span></td></tr>
+        <tr><td>COONY Retinol Overnight Repair Serum 30ml</td><td>1</td><td><span class="badge green">Resuelto</span></td></tr>
+      </tbody>
+    </table>
+    <p class="note">Solo Skinko. Órdenes = clientes que compraron mientras el producto estaba sin stock. Todos los faltantes fueron resueltos. La gestión requirió coordinación con proveedores y comunicación proactiva a clientes — muy pocos se molestaron.</p>
+  </div>
+
+  <div class="sec-label" style="margin-top:1.5rem">Productos sin stock · SkinFree + Celimax · 20–26 agosto</div>
+  <div class="card">
+    <div class="card-title">Órdenes demoradas / con cambio por problemas de stock · SkinFree</div>
+    <table class="data-table">
+      <thead><tr><th>Producto</th><th>Período</th><th>Estado</th></tr></thead>
+      <tbody>
+        <tr><td>ANUA Niacinamide 10% + TXA 3% Serum 30ml</td><td>20–26/ago</td><td><span class="badge amber">Demorada / Cambio</span></td></tr>
+        <tr><td>SKIN1004 Madagascar Centella Hyalu-Cica Water-Fit Sun Serum</td><td>20–26/ago</td><td><span class="badge amber">Demorada / Cambio</span></td></tr>
+        <tr><td>SKIN1004 Madagascar Centella Tone Brightening Capsule Ampoule 50ml</td><td>20–26/ago</td><td><span class="badge amber">Demorada / Cambio</span></td></tr>
+        <tr><td>Celimax Pore + Dark Spot Brightening Cream 35ml</td><td>20–26/ago</td><td><span class="badge amber">Demorada / Cambio</span></td></tr>
+        <tr><td>Celimax The Real Noni Starter Kit Mini</td><td>20–26/ago</td><td><span class="badge amber">Demorada / Cambio</span></td></tr>
+        <tr><td>MEDICUBE AGE-R PDRN Booster Gel 300ml</td><td>20–26/ago</td><td><span class="badge amber">Demorada / Cambio</span></td></tr>
+      </tbody>
+    </table>
+    <p class="note">Total: 23 órdenes afectadas (20–26/ago). Requirieron gestión de cambio o comunicación de demora con el cliente.</p>
+  </div>
+
+  <div class="card" style="border-top:3px solid var(--red)">
+    <div class="card-title">Órdenes con cambio / reembolso · Producto VT · 26/ago</div>
+    <div class="kpi-strip cols2" style="margin-bottom:0">
+      <div class="kpi red"><div class="kpi-label">Órdenes afectadas</div><div class="kpi-val red">14</div><div class="kpi-sub">26/ago · SkinFree · Prod. VT</div></div>
+      <div class="kpi amb"><div class="kpi-label">Tipo</div><div class="kpi-val amb" style="font-size:16px;margin-top:4px;font-weight:500">Cambio / Reembolso</div><div class="kpi-sub">gestionado el mismo día</div></div>
+    </div>
+  </div>
+</div>
+
+<div class="footer">Reporte Mensual · Atención al Cliente · Agosto 2026 · Laboratorio BEK<br>Datos: 3–26 agosto 2026</div>
+</div><!-- /page -->
+
+<script>
+// TAB SWITCHING
+function showTab(id, btn) {
+  document.querySelectorAll('.tab-panel').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.tab-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById('tp-' + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// BRAND SWITCHING
+function showBrand(prefix, id, btn) {
+  const p = prefix + '-';
+  document.querySelectorAll('[id^="' + p + '"]').forEach(x => x.classList.remove('active'));
+  btn.closest('.brand-tabs').querySelectorAll('.brand-btn').forEach(b => b.classList.remove('active'));
+  document.getElementById(p + id).classList.add('active');
+  btn.classList.add('active');
+}
+
+// DATA
+const fechas = ['03/08','04/08','05/08','06/08','07/08','10/08','11/08','12/08','13/08','14/08','18/08','19/08','20/08','21/08','24/08','25/08','26/08'];
+const sk9  = [40,71,25,24,18,46,38,22,40,10,45,46,34,14,24,17,11];
+const sk18 = [40,2,8,0,8,6,3,16,0,5,32,18,0,6,1,0,0];
+const sf9  = [72,71,79,54,22,80,53,36,22,71,82,92,110,151,190,null,null];
+const sf18 = [43,51,29,2,0,30,15,0,12,24,81,105,130,159,0,null,null];
+
+// CHART WPP COMPARATIVO
+new Chart(document.getElementById('chartWppComp'), {
+  type: 'bar',
+  data: {
+    labels: fechas,
+    datasets: [
+      { label: 'SK apertura 9hs', data: sk9, backgroundColor: 'rgba(124,58,237,.45)', borderRadius: 2, order: 2 },
+      { label: 'SF apertura 9hs', data: sf9, backgroundColor: 'rgba(37,99,235,.35)', borderRadius: 2, order: 3 },
+      { label: 'SK cierre 18hs', data: sk18, type: 'line', borderColor: '#7c3aed', backgroundColor: 'transparent', pointRadius: 3, tension: .3, spanGaps: true, order: 1 },
+      { label: 'SF cierre 18hs', data: sf18, type: 'line', borderColor: '#2563eb', backgroundColor: 'transparent', pointRadius: 3, tension: .3, spanGaps: true, borderDash: [4,3], order: 0 },
+    ]
+  },
+  options: {
+    plugins: { legend: { labels: { font: { size: 10 }, boxWidth: 10 } } },
+    scales: {
+      y: { grid: { color: '#f0eef8' }, ticks: { font: { size: 10 } } },
+      x: { grid: { display: false }, ticks: { font: { size: 9 }, maxRotation: 45 } }
+    }
+  }
+});
+
+// CHART SK BURBUXA sin leer
+const bFechas = ['06/08','07/08','10/08','11/08','12/08','13/08','14/08','18/08','19/08','20/08','21/08','24/08','25/08','26/08'];
+const bSinLeer9 = [36,31,87,66,39,87,21,133,104,75,44,91,38,10];
+const bSinLeer18 = [1,9,10,5,null,0,16,75,40,0,6,2,0,0];
+new Chart(document.getElementById('chartSkBurb'), {
+  type: 'line',
+  data: {
+    labels: bFechas,
+    datasets: [
+      { label: 'Sin leer 9hs', data: bSinLeer9, borderColor: '#7c3aed', backgroundColor: 'rgba(124,58,237,.08)', fill: true, pointRadius: 3, tension: .3 },
+      { label: 'Sin leer 18hs', data: bSinLeer18, borderColor: '#059669', backgroundColor: 'transparent', pointRadius: 3, tension: .3, spanGaps: true, borderDash: [4,2] }
+    ]
+  },
+  options: {
+    plugins: { legend: { labels: { font: { size: 10 }, boxWidth: 10 } } },
+    scales: {
+      y: { grid: { color: '#f0eef8' }, ticks: { font: { size: 10 } }, min: 0 },
+      x: { grid: { display: false }, ticks: { font: { size: 9 }, maxRotation: 45 } }
+    }
+  }
+});
+
+// CHART SF BURBUXA
+const sfBFechas = ['18/08','19/08','20/08','21/08','24/08','25/08'];
+const sfBTodos = [131,181,174,208,167,113];
+const sfBSinLeer = [87,91,75,68,121,47];
+new Chart(document.getElementById('chartSfBurbTop'), {
+  type: 'bar',
+  data: {
+    labels: ['Web Envíos','Web','Web Pagos','Error Pedido','Cambio','Error mail','Vuelve OCA','Cupón','Falla','Reacciones'],
+    datasets: [{
+      data: [299, 210, 124, 89, 88, 52, 47, 43, 37, 37],
+      backgroundColor: ['#2563eb','#7c3aed','#0891b2','#dc2626','#16a34a','#d97706','#059669','#6366f1','#f59e0b','#a099b8'],
+      borderRadius: 4, borderWidth: 0
+    }]
+  },
+  options: {
+    indexAxis: 'y',
+    plugins: { legend: { display: false } },
+    scales: {
+      x: { grid: { color: '#f0eef8' }, ticks: { font: { size: 10 } } },
+      y: { grid: { display: false }, ticks: { font: { size: 10 } } }
+    }
+  }
+});
+
+new Chart(document.getElementById('chartSfBurb'), {
+  type: 'bar',
+  data: {
+    labels: sfBFechas,
+    datasets: [
+      { label: 'Todos los tickets', data: sfBTodos, backgroundColor: 'rgba(37,99,235,.35)', borderRadius: 3 },
+      { label: 'Sin leer', data: sfBSinLeer, backgroundColor: 'rgba(37,99,235,.75)', borderRadius: 3 }
+    ]
+  },
+  options: {
+    plugins: { legend: { labels: { font: { size: 10 }, boxWidth: 10 } } },
+    scales: {
+      y: { grid: { color: '#f0eef8' }, ticks: { font: { size: 10 } } },
+      x: { grid: { display: false }, ticks: { font: { size: 9 } } }
+    }
+  }
+});
+
+new Chart(document.getElementById('chartCxTopicos'), {
+  type: 'doughnut',
+  data: {
+    labels: ['Asesoramiento','OCA/Reenvíos','Marketing','Web Envíos','Web general','Reintegro','Otros'],
+    datasets: [{
+      data: [50,30,30,20,11,8,8],
+      backgroundColor: ['#16a34a','#2563eb','#a3e635','#0891b2','#d97706','#dc2626','#a099b8'],
+      borderWidth: 0
+    }]
+  },
+  options: {
+    plugins: { legend: { position: 'bottom', labels: { font: { size: 10 }, boxWidth: 10, padding: 8 } } },
+    cutout: '60%'
+  }
+});
+</script>
+</body>
+</html>
