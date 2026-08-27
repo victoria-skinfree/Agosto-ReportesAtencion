@@ -2,21 +2,30 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8">
-  <title>Panel de Reportes · Atención al Cliente</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Panel de Reportes de Atención</title>
   <style>
-    body { font-family: sans-serif; padding: 2rem; background: #f4f4f9; }
-    h1 { color: #333; }
-    ul { list-style: none; padding: 0; }
-    li { margin: 10px 0; }
-    a { display: inline-block; padding: 10px 15px; background: #6d28d9; color: white; text-decoration: none; border-radius: 6px; }
+    body { font-family: 'Inter', system-ui, sans-serif; padding: 3rem 2rem; background: #f8f9fa; color: #1a1a1a; }
+    h1 { font-size: 24px; font-weight: 600; margin-bottom: 1.5rem; display: flex; align-items: center; gap: 10px; }
+    .btn-container { display: flex; flex-direction: column; gap: 12px; max-width: 320px; }
+    .btn { display: inline-flex; align-items: center; gap: 10px; padding: 12px 20px; background: #7c3aed; color: white; text-decoration: none; border-radius: 8px; font-weight: 500; font-size: 14px; transition: background 0.2s; }
+    .btn:hover { background: #6d28d9; }
   </style>
 </head>
 <body>
+
   <h1>📊 Panel de Reportes de Atención</h1>
-  <ul>
-    <li><a href="mensual/agosto.html">📅 Reporte Mensual Agosto</a></li>
-    <li><a href="semanal/semana-1.html">🗓️ Reporte Semanal 1</a></li>
-    <li><a href="resenas_google.html">⭐ Reporte de Reseñas</a></li>
-  </ul>
+
+  <div class="btn-container">
+    <!-- Apunta directamente a la carpeta 'Reporte Mensual' -->
+    <a href="Reporte Mensual/" class="btn">📅 Reporte Mensual Agosto</a>
+    
+    <!-- Apunta directamente a la carpeta 'ReportesSemanales' -->
+    <a href="ReportesSemanales/" class="btn">📅 Reporte Semanal 1</a>
+    
+    <!-- Si tienes el reporte de reseñas en la raíz -->
+    <a href="resenas_google.html" class="btn">⭐ Reporte de Reseñas</a>
+  </div>
+
 </body>
 </html>
